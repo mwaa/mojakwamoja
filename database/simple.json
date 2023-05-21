@@ -1,0 +1,82 @@
+{
+  "62c60b15-11ca-4fdc-a296-77ca77c712a6": {
+    "_id": "62c60b15-11ca-4fdc-a296-77ca77c712a6",
+    "logo": "/logos/donate.png",
+    "name": "Peace",
+    "description": "Make it work for you"
+  },
+  "a067f0a0-e324-4d2c-9929-340dc795d3b8": {
+    "_id": "a067f0a0-e324-4d2c-9929-340dc795d3b8",
+    "logo": "/logos/a067f0a0-e324-4d2c-9929-340dc795d3b8/donate.png",
+    "name": "First kind",
+    "description": "Peace masters",
+    "PRODUCTS": {
+      "5cbe311c-dc84-469e-b89d-f80b06b279ab": {
+        "_id": "5cbe311c-dc84-469e-b89d-f80b06b279ab",
+        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/5cbe311c-dc84-469e-b89d-f80b06b279ab/bad robot 2.jpeg",
+        "name": "Organization 1",
+        "product": "Robots",
+        "payout": "0x793894434",
+        "isBundle": "false",
+        "cost": "350",
+        "BENEFICIARIES": {
+          "e1592087-78d0-41cc-9bc2-fc74fd59a5d1": {
+            "_id": "e1592087-78d0-41cc-9bc2-fc74fd59a5d1",
+            "voucher": "mix",
+            "voicePrint": "master"
+          },
+          "34509b0b-3c01-4713-a16c-ce4cfa1ac845": {
+            "_id": "34509b0b-3c01-4713-a16c-ce4cfa1ac845",
+            "voucher": "made",
+            "voicePrint": "mix"
+          },
+          "de948e48-b4ab-4bb9-a539-d471ed3d7ece": {
+            "_id": "de948e48-b4ab-4bb9-a539-d471ed3d7ece",
+            "voucher": "mine",
+            "voicePrint": ""
+          }
+        }
+      },
+      "d7238333-9585-4756-a771-f6750a61475a": {
+        "_id": "d7238333-9585-4756-a771-f6750a61475a",
+        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/d7238333-9585-4756-a771-f6750a61475a/sack-maize-flour-28336985.jpg",
+        "name": "Organization 2",
+        "product": "Maize",
+        "payout": "0x793894434",
+        "isBundle": "false",
+        "cost": "50",
+        "BENEFICIARIES": {
+          "64532d8e-6e76-46a1-b179-c07a7cb6c7a9": {
+            "_id": "64532d8e-6e76-46a1-b179-c07a7cb6c7a9",
+            "voucher": "Mane",
+            "voicePrint": "man"
+          }
+        }
+      },
+      "32c6d230-bf9a-4f04-a44c-4332cff7d838": {
+        "_id": "32c6d230-bf9a-4f04-a44c-4332cff7d838",
+        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/32c6d230-bf9a-4f04-a44c-4332cff7d838/donate.png",
+        "name": "Organization 3",
+        "product": "Yearly School Fees",
+        "payout": "0xpoijkljadf",
+        "isBundle": "false",
+        "cost": "150"
+      },
+      "7ee878a2-54b3-4364-b927-b39e88508329": {
+        "_id": "7ee878a2-54b3-4364-b927-b39e88508329",
+        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/7ee878a2-54b3-4364-b927-b39e88508329/icons8-donation-96 (1).png",
+        "name": "Organization 4",
+        "product": "Beans",
+        "payout": "0x793894434",
+        "isBundle": "false",
+        "cost": "50"
+      }
+    }
+  },
+  "b77cd5d1-5052-4d9e-b835-401c198a8827": {
+    "_id": "b77cd5d1-5052-4d9e-b835-401c198a8827",
+    "logo": "/logos/b77cd5d1-5052-4d9e-b835-401c198a8827/donate.png",
+    "name": "Fund Education",
+    "description": "We assist in funding of early school years"
+  }
+}
