@@ -1,6 +1,5 @@
 import fs from 'fs';
 
-
 const dbPath = './database/simple.json';
 
 export function dbSaveTo(uuid, record) {

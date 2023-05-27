@@ -1,0 +1,17 @@
+{
+  "name": "mojakwamojacontracts",
+  "version": "1.0.0",
+  "description": "Smart contract to handle donations and transfer to beneficiaries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@chainlink/contracts": "^0.6.1",
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "dotenv": "^16.0.3",
+    "hardhat": "^2.14.0"
+  }
+}
