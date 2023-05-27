@@ -1,0 +1,8 @@
+.DS_Store
+.env
+.flaskenv
+*.pyc
+*.pyo
+
+# temporary folder for voice files
+audio/*

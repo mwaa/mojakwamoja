@@ -2,5 +2,9 @@
   "eslint.workingDirectories": [
     { "pattern": "contracts/*/" }, 
     { "pattern": "ui/*/" }
-  ]
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python"
+  },
+  "python.formatting.provider": "none"
 }
