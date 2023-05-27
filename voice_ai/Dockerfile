@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 # define the port number the container should expose
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+CMD gunicorn --worker-tmp-dir /dev/shm --config gunicorn_config.py app:app
