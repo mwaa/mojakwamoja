@@ -1,9 +1,9 @@
-"use client";
-import { Modal } from "flowbite-react";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import CharityForm from "../forms/CharityForm";
+'use client';
+import { Modal } from 'flowbite-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
+import CharityForm from '../forms/CharityForm';
 
 export default function Charities({ charities }) {
   const [showForm, setShowForm] = useState(false);
@@ -19,7 +19,7 @@ export default function Charities({ charities }) {
         <div className="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
           <div>
             <Image
-              src={charity.logo || "/donate.png"}
+              src={charity.logo || '/donate.png'}
               className="rounded-t-lg"
               alt="logo"
               width={80}

@@ -1,5 +1,5 @@
-import PageLayout from "@/components/PageLayout";
-import RedeemForm from "@/components/forms/RedeemForm";
+import PageLayout from '@/components/PageLayout';
+import RedeemForm from '@/components/forms/RedeemForm';
 
 const Home = () => {
   return (

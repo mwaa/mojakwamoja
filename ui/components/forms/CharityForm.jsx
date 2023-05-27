@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+'use client';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import React, { useRef, useState } from 'react';
 
 export default function CharityForm({ onClose }) {
   const router = useRouter();
@@ -9,10 +9,10 @@ export default function CharityForm({ onClose }) {
   const uploadEl = useRef(null);
 
   const [form, setForm] = useState({
-    name: "",
-    description: "",
-    logo: "",
-    image: "",
+    name: '',
+    description: '',
+    logo: '',
+    image: ''
   });
 
   const uploadFile = (image) => {
@@ -21,20 +21,20 @@ export default function CharityForm({ onClose }) {
 
   const saveCharity = () => {
     const body = new FormData();
-    body.append("image", form.image);
-    body.append("name", form.name);
-    body.append("description", form.description);
+    body.append('image', form.image);
+    body.append('name', form.name);
+    body.append('description', form.description);
 
-    fetch("/api/charities/add", {
-      method: "POST",
-      body,
+    fetch('/api/charities/add', {
+      method: 'POST',
+      body
     })
       .then((response) => response.json())
       .then((record) => {
         router.push(`/charities/${record.data._id}`);
       })
       .catch((e) => {
-        console.log("Error unknown: ", e);
+        console.log('Error unknown: ', e);
       });
   };
 
@@ -45,7 +45,9 @@ export default function CharityForm({ onClose }) {
 
   return (
     <form className="mx-auto my-4 rounded-lg border-2 border-gray-200 p-5 dark:border-gray-700 md:w-full">
-      <h2 className="my-4 font-light text-2xl text-gray-900 dark:text-gray-300">Fill in the Charity details</h2>
+      <h2 className="my-4 font-light text-2xl text-gray-900 dark:text-gray-300">
+        Fill in the Charity details
+      </h2>
 
       <div className="grid gap-6 mb-6 md:grid-cols-2">
         <div aria-label="start">
@@ -87,7 +89,7 @@ export default function CharityForm({ onClose }) {
         </div>
 
         <div aria-label="end">
-          {form.logo != "" ? (
+          {form.logo != '' ? (
             <div className="relative mb-2">
               <Image
                 src={form.logo}

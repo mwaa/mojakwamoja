@@ -1,42 +1,42 @@
-"use client";
-import Image from "next/image";
-import React, { useState } from "react";
+'use client';
+import Image from 'next/image';
+import React, { useState } from 'react';
 
 export default function ProductForm({ charityID, closeOnSave }) {
   const [form, setForm] = useState({
-    name: "",
-    image: "",
-    display: "",
-    product: "",
-    payout: "",
+    name: '',
+    image: '',
+    display: '',
+    product: '',
+    payout: '',
     isBundle: false,
-    cost: 0,
+    cost: 0
   });
 
   const saveProduct = () => {
     const body = new FormData();
-    body.append("name", form.name);
-    body.append("image", form.image);
-    body.append("product", form.product);
-    body.append("payout", form.payout);
-    body.append("isBundle", form.isBundle);
-    body.append("cost", form.cost);
-    body.append("charityID", charityID);
-    body.append("entity", "PRODUCTS");
+    body.append('name', form.name);
+    body.append('image', form.image);
+    body.append('product', form.product);
+    body.append('payout', form.payout);
+    body.append('isBundle', form.isBundle);
+    body.append('cost', form.cost);
+    body.append('charityID', charityID);
+    body.append('entity', 'PRODUCTS');
 
     fetch(`/api/charities/${charityID}`, {
-      method: "POST",
-      body,
+      method: 'POST',
+      body
     })
       .then((response) => response.json())
       .then((record) => {
-        console.log("saved", record);
+        console.log('saved', record);
         closeOnSave();
       })
       .catch((e) => {
-        console.log("Error unknown: ", e);
+        console.log('Error unknown: ', e);
       });
-    console.log("new");
+    console.log('new');
   };
 
   const uploadFile = (image) => {
@@ -143,7 +143,7 @@ export default function ProductForm({ charityID, closeOnSave }) {
         </div>
       </div>
 
-      {form.image != "" ? (
+      {form.image != '' ? (
         <div className="relative mb-2">
           <Image src={form.display} className="rounded-lg" alt="logo" width={100} height={100} />
         </div>

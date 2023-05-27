@@ -1,13 +1,13 @@
-import { ethers } from "hardhat";
-import LINK_TOKEN_ABI from "@chainlink/contracts/abi/v0.4/LinkToken.json";
+import { ethers } from 'hardhat';
+import LINK_TOKEN_ABI from '@chainlink/contracts/abi/v0.4/LinkToken.json';
 
 const networkConfig = {
-  name: "mumbai",
-  linkToken: "0x326C977E6efc84E512bB9C30f76E30c160eD06FB",
-  oracle: process.env.ORACLE_ADDRESS,
-  jobId: ethers.utils.toUtf8Bytes(process.env.JOB_ID || ""),
-  fee: "100000000000000000",
-  fundAmount: "100000000000000000", // 0.1
+  name: 'mumbai',
+  linkToken: '0x326C977E6efc84E512bB9C30f76E30c160eD06FB',
+  oracle: process.env.ORACLE_ADDRESS || '',
+  jobId: ethers.utils.toUtf8Bytes(process.env.JOB_ID || ''),
+  fee: '100000000000000000',
+  fundAmount: '100000000000000000' // 0.1
 };
 
 async function main() {
@@ -18,7 +18,7 @@ async function main() {
   const deployer = accounts[0];
 
   const linkTokenAddress = networkConfig.linkToken;
-  const donationsFactory = await ethers.getContractFactory("Donations");
+  const donationsFactory = await ethers.getContractFactory('Donations');
   const donations = await donationsFactory.deploy(
     networkConfig.oracle,
     networkConfig.jobId,

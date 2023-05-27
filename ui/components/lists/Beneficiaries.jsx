@@ -1,7 +1,7 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import IdentityForm from "../forms/IdentityForm";
-import { Modal } from "flowbite-react";
+'use client';
+import React, { useEffect, useState } from 'react';
+import IdentityForm from '../forms/IdentityForm';
+import { Modal } from 'flowbite-react';
 
 export function Beneficiaries({ charityID, product }) {
   const [showForm, setShowForm] = useState(false);

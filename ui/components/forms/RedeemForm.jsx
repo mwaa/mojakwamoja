@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useRef, useEffect } from "react";
+'use client';
+import React, { useState, useRef, useEffect } from 'react';
 
 const audioCtx = new window.AudioContext();
 let audioAnalyser = audioCtx.createAnalyser();
@@ -13,17 +13,17 @@ export default function RedeemForm({ afterSave, productID, productName }) {
   let canvasCtx;
 
   useEffect(() => {
-    canvasCtx = player.current.getContext("2d");
+    canvasCtx = player.current.getContext('2d');
   }, [player]);
 
   const visualizeSineWave = (
     width,
     height,
-    backgroundColor = "#ffffff",
-    strokeColor = "#000000"
+    backgroundColor = '#ffffff',
+    strokeColor = '#000000'
   ) => {
     if (player.current) {
-      console.log("We got current", player.current);
+      console.log('We got current', player.current);
     }
     const bufferLength = audioAnalyser.fftSize;
     const dataArray = new Uint8Array(bufferLength);
@@ -66,7 +66,7 @@ export default function RedeemForm({ afterSave, productID, productName }) {
   };
 
   const handleSuccessRecord = (stream) => {
-    const options = { mimeType: "audio/webm" };
+    const options = { mimeType: 'audio/webm' };
     const recordedChunks = [];
 
     if (!mediaRecorder) {
@@ -76,7 +76,7 @@ export default function RedeemForm({ afterSave, productID, productName }) {
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: "audio/wav" });
+        const blob = new Blob(recordedChunks, { type: 'audio/wav' });
         player.src = URL.createObjectURL(blob);
         if (stream) {
           // get all tracks from the MediaStream
@@ -88,7 +88,7 @@ export default function RedeemForm({ afterSave, productID, productName }) {
     }
 
     setRecording(true);
-    if (mediaRecorder.state === "paused") {
+    if (mediaRecorder.state === 'paused') {
       mediaRecorder.resume();
     } else {
       audioCtx.resume().then(() => {
@@ -112,12 +112,12 @@ export default function RedeemForm({ afterSave, productID, productName }) {
   };
 
   const [form, setForm] = useState({
-    name: "",
-    biometricID: "",
+    name: '',
+    biometricID: ''
   });
 
   const createAccount = () => {
-    console.log("Create account");
+    console.log('Create account');
   };
 
   const handleChange = (e) => {
@@ -182,7 +182,7 @@ export default function RedeemForm({ afterSave, productID, productName }) {
         <div className="relative mb-2">
           <button
             type="button"
-            onClick={() => console.log("capture speaker approval")}
+            onClick={() => console.log('capture speaker approval')}
             className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-6 py-4 text-center items-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
             <svg

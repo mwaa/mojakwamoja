@@ -1,9 +1,9 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import ProductForm from "../forms/ProductForm";
-import Image from "next/image";
-import Link from "next/link";
-import { Modal } from "flowbite-react";
+'use client';
+import React, { useEffect, useState } from 'react';
+import ProductForm from '../forms/ProductForm';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Modal } from 'flowbite-react';
 
 export default function Products({ charity }) {
   const [showForm, setShowForm] = useState(false);
@@ -37,7 +37,7 @@ export default function Products({ charity }) {
       </Link>
     ));
     setProductsElement(htmlLoop);
-  }, [ charity ]);
+  }, [charity]);
 
   return (
     <div className="flex">
@@ -73,8 +73,8 @@ export default function Products({ charity }) {
       </Modal>
 
       <div className="container flex">
-          <div className="grid grid-cols-3 gap-5">{productsElement}</div>
-        </div>
+        <div className="grid grid-cols-3 gap-5">{productsElement}</div>
+      </div>
     </div>
   );
 }

@@ -1,32 +1,32 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 export default function IdentityForm({ charityID, productID, closeOnSave }) {
   const [form, setForm] = useState({
     voucher: uuid(),
-    voicePrint: "",
+    voicePrint: ''
   });
 
   const createAccount = () => {
     const body = new FormData();
-    body.append("voucher", form.voucher);
-    body.append("voicePrint", form.voicePrint);
-    body.append("entity", "BENEFICIARIES");
+    body.append('voucher', form.voucher);
+    body.append('voicePrint', form.voicePrint);
+    body.append('entity', 'BENEFICIARIES');
 
     fetch(`/api/charities/${charityID}/product/${productID}`, {
-      method: "POST",
-      body,
+      method: 'POST',
+      body
     })
       .then((response) => response.json())
       .then((record) => {
-        console.log("saved", record);
+        console.log('saved', record);
         closeOnSave();
       })
       .catch((e) => {
-        console.log("Error unknown: ", e);
+        console.log('Error unknown: ', e);
       });
-    console.log("new");
-    console.log("Create account");
+    console.log('new');
+    console.log('Create account');
   };
 
   const handleChange = (e) => {
@@ -37,9 +37,7 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
   return (
     <form className="mx-auto rounded-lg border border-gray-200 p-5 dark:border-gray-700 w-full">
       <div className="mb-6 pt-5">
-        <p className="my-2 text-sm text-gray-900 dark:text-gray-300">
-          Generate voucher
-        </p>
+        <p className="my-2 text-sm text-gray-900 dark:text-gray-300">Generate voucher</p>
 
         <div className="relative mb-2">
           <input
@@ -78,7 +76,6 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
           </label>
         </div>
       </div>
-
 
       <button
         type="button"
