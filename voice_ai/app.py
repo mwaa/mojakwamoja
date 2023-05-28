@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 logging.basicConfig(filename="debug.log", level=logging.DEBUG)
 load_dotenv()  # take environment variables from .env.
 
+AUDIO_FOLDER = os.path.abspath(os.path.join(os.pardir, 'audio'))
 session = boto3.session.Session()
 client = session.client('s3',
                         config=botocore.config.Config(s3={'addressing_style': 'virtual'}),
@@ -55,12 +56,12 @@ def verify():
     redeemingVoice = input['redeeming']
 
     logging.debug('This is our input {}'.format(originalVoice))
-    localOriginalPath = os.path.join('./audio', originalVoice)
+    localOriginalPath = os.path.join(AUDIO_FOLDER, originalVoice)
     logging.debug('This is our path {}'.format(localOriginalPath))
     if (os.path.exists(localOriginalPath) == False):
         download_file(originalVoice, localOriginalPath)
 
-    localRedeemPath = os.path.join('./audio', redeemingVoice);
+    localRedeemPath = os.path.join(AUDIO_FOLDER, redeemingVoice);
     download_file(redeemingVoice, localRedeemPath)
 
     if verify_same_person(localOriginalPath, localRedeemPath): 
