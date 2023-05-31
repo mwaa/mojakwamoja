@@ -6,3 +6,6 @@
 
 # temporary folder for voice files
 audio/*
+
+# local functionality test
+test.py

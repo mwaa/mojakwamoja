@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { v4 as uuid } from 'uuid';
 import { dbGetByUUID, dbSaveTo } from '@/database/db';
+import { uploadToS3 } from '@/utils/uploadS3';
 
 export async function GET(request, { params }) {
   const { charityID, productID } = params;
@@ -20,31 +21,21 @@ export async function POST(request, { params }) {
   const formData = await request.formData();
   const newId = uuid();
 
-  // TODO:: audio upload
-  // const file = formData.get('image');
-  // fs.mkdirSync(`./public/${charityID}/${newId}/`, { recursive: true });
-  // fs.writeFileSync(
-  //     `./public/${charityID}/${newId}/${file.name}`,
-  //     Buffer.from(await file.arrayBuffer())
-  // );
-
-  console.log(charity.PRODUCTS);
-  console.log(params);
-  console.log(productID);
-  console.log(charity.PRODUCTS.hasOwnProperty(productID));
-  console.log(productID in charity.PRODUCTS);
-
   if (
     charity &&
     charity.PRODUCTS &&
     productID in charity.PRODUCTS &&
     formData.get('entity') === 'BENEFICIARIES'
   ) {
-    console.log('in the ofsite');
+    const voucher = formData.get('voucher');
+    const audioFile = formData.get('audio');
+
+    uploadToS3(voucher, Buffer.from(await audioFile.arrayBuffer()));
+
     const beneficiaries = charity.PRODUCTS[productID]['BENEFICIARIES'] || {};
     beneficiaries[newId] = {
       _id: newId,
-      name: formData.get('voucher'),
+      voucher: formData.get('voucher'),
       voicePrint: formData.get('voicePrint')
     };
     charity.PRODUCTS[productID]['BENEFICIARIES'] = beneficiaries;

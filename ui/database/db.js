@@ -30,3 +30,16 @@ export function dbGetAll() {
   const data = JSON.parse(fs.readFileSync(dbPath));
   return Object.values(data);
 }
+
+export function dbGetProductBenefiaries(productID) {
+  let beneficiaries = {};
+  Object.values(charities).forEach((charity) => {
+    if ('PRODUCTS' in charity && productID in charity.PRODUCTS) {
+      if ('BENEFICIARIES' in charity.PRODUCTS[productID]) {
+        beneficiaries = charity.PRODUCTS[productID].BENEFICIARIES;
+      }
+    }
+  });
+
+  return beneficiaries;
+}

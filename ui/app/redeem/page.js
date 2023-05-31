@@ -1,10 +1,12 @@
 import PageLayout from '@/components/PageLayout';
 import RedeemForm from '@/components/forms/RedeemForm';
 
-const Home = () => {
+const Home = ({ params }) => {
+  const { productID } = params;
+
   return (
     <PageLayout showNav={true}>
-      <RedeemForm />
+      <RedeemForm productID={productID} />
     </PageLayout>
   );
 };

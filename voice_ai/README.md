@@ -1,5 +1,7 @@
 ### Speaker recognition api
-____________
+
+---
+
 A simple api using Nvidia AI toolkit NEMO. Api receives names of audio files uploaded to an s3 bucket and verifies that they belong to the same speaker.
 
 ```
@@ -19,4 +21,3 @@ Json Body: {
 ### Export current environment installs
 
 pip list --format=freeze > requirements.txt
-

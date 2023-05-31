@@ -1,8 +1,5 @@
 {
-  "eslint.workingDirectories": [
-    { "pattern": "contracts/*/" }, 
-    { "pattern": "ui/*/" }
-  ],
+  "eslint.workingDirectories": [{ "pattern": "contracts/*/" }, { "pattern": "ui/*/" }],
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
