@@ -1,21 +1,42 @@
-// SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
+import '@chainlink/contracts/src/v0.8/ChainlinkClient.sol';
+import '@chainlink/contracts/src/v0.8/ConfirmedOwner.sol';
 
 /**
  * @title The Donations contract
  * @notice Holds donations and transfers to vendors on succesful redeem
  */
-contract Donations is ChainlinkClient {
+contract Donations is ChainlinkClient, ConfirmedOwner {
     using Chainlink for Chainlink.Request;
 
-    uint256 public volume;
     address private immutable oracle;
     bytes32 private immutable jobId;
     uint256 private immutable fee;
 
-    event DataFullfilled(uint256 volume);
+    uint256 public totalDonations;
+
+    mapping(string => uint256) public beneficiaryDonations;
+    mapping(string => uint256) public productDonations;
+    mapping(string => string[]) private productBeneficiary;
+    mapping(string => uint256) public productRegistry;
+    mapping(string => address payable) public payoutRegistry;
+
+    struct Beneficiary {
+        string voucher;
+        string voicePrint;
+    }
+    mapping(string => Beneficiary) private beneficiaryRegistry;
+
+    struct RedeemRequest {
+        string voucher;
+        string product;
+    }
+    mapping(string => RedeemRequest) private redeemRegistry;
+
+    event NewBeneficiary(string voucher, string product);
+    event RedeemFullfilled(address _vendor, string _trackID, uint256 _amount);
 
     /**
      * @notice Executes once when a contract is created to initialize state variables
@@ -25,79 +46,153 @@ contract Donations is ChainlinkClient {
      * @param _fee - node operator price per API call / data request
      * @param _link - LINK token address on the corresponding network
      *
-     * Network: Sepolia
-     * Oracle: 0x6090149792dAAeE9D1D568c9f9a6F6B46AA29eFD
-     * Job ID: ca98366cc7314957b8c012c72f05aeeb
-     * Fee: 0.1 LINK
      */
-    constructor(address _oracle, bytes32 _jobId, uint256 _fee, address _link) {
-        if (_link == address(0)) {
-            setPublicChainlinkToken();
-        } else {
-            setChainlinkToken(_link);
-        }
+    constructor(
+        address _oracle,
+        bytes32 _jobId,
+        uint256 _fee,
+        address _link
+    ) ConfirmedOwner(msg.sender) {
+        setChainlinkToken(_link);
         oracle = _oracle;
         jobId = _jobId;
         fee = _fee;
     }
 
-    /**
-     * @notice Creates a Chainlink request to retrieve API response, find the target
-     * data, then multiply by 1000000000000000000 (to remove decimal places from data).
-     *
-     * @return requestId - id of the request
-     */
-    function requestVolumeData() public returns (bytes32 requestId) {
-        Chainlink.Request memory request = buildChainlinkRequest(
-            jobId,
-            address(this),
-            this.fulfill.selector
-        );
+    function addBeneficiary(
+        string memory voucher,
+        string memory voicePrint,
+        string memory product
+    ) public {
+        require(productRegistry[product] != 0, 'Product does not exist');
 
-        // Set the URL to perform the GET request on
-        request.add(
-            "get",
-            "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=ETH&tsyms=USD"
-        );
+        Beneficiary memory newBeneficiary = Beneficiary(voucher, voicePrint);
 
-        // Set the path to find the desired data in the API response, where the response format is:
-        // {"RAW":
-        //   {"ETH":
-        //    {"USD":
-        //     {
-        //      "VOLUME24HOUR": xxx.xxx,
-        //     }
-        //    }
-        //   }
-        //  }
-        // request.add("path", "RAW.ETH.USD.VOLUME24HOUR"); // Chainlink nodes prior to 1.0.0 support this format
-        request.add("path", "RAW,ETH,USD,VOLUME24HOUR"); // Chainlink nodes 1.0.0 and later support this format
+        productBeneficiary[product].push(voucher);
+        beneficiaryRegistry[voucher] = newBeneficiary;
 
-        // Multiply the result by 1000000000000000000 to remove decimals
-        int256 timesAmount = 10 ** 18;
-        request.addInt("times", timesAmount);
+        emit NewBeneficiary(voucher, product);
+    }
 
-        // Sends the request
-        return sendChainlinkRequestTo(oracle, request, fee);
+    function addCharityProduct(
+        string memory product,
+        uint256 cost,
+        address payable vendorAccount
+    ) public {
+        require(cost > 0, 'Product cost should be greater than 0');
+        productRegistry[product] = cost;
+        payoutRegistry[product] = vendorAccount;
     }
 
     /**
-     * @notice Receives the response in the form of uint256
+     * Funds donated directly to benefiary
+     */
+    function donate(string memory voucher) public payable {
+        require(msg.value > 0, 'Donation must be greater than 0');
+
+        beneficiaryDonations[voucher] += msg.value;
+        totalDonations += msg.value;
+    }
+
+    /**
+     * Funds donated to product vendor
+     */
+    function donateToVendor(string memory product) public payable {
+        require(msg.value > 0, 'Donation must be greater than 0');
+
+        productDonations[product] += msg.value;
+        totalDonations += msg.value;
+    }
+
+    /**
+     * Distribute vendor funds based on registered beneficiaris of product
+     */
+    function distributeVendorDonations(string memory product) public {
+        uint256 unitCost = productRegistry[product];
+        require(productDonations[product] > unitCost, 'Insufficient funds');
+
+        // find how many recipients based on available donated funds
+        uint256 recipients = productDonations[product] / unitCost;
+
+        for (uint256 i = 0; i < recipients; i++) {
+            // Can use space and time to query remaining users who haven't been
+            // awarded products
+            string memory beneficiary = productBeneficiary[product][i]; //TODO:: award random beneficiaries
+
+            beneficiaryDonations[beneficiary] += unitCost;
+            productDonations[product] -= unitCost;
+
+            // TODO:: transfer to escrow wallet which only transfers out if request is from donations contract
+        }
+    }
+
+    /**
+     * @notice Creates a Chainlink request to redeem donations fund from beneficiary & transfer to vendor
+     * @return requestId - id of the request
+     */
+    function requestRedeem(
+        string memory _trackingId,
+        string memory voucher,
+        string memory product,
+        string memory original,
+        string memory redeem
+    ) public returns (bytes32 requestId) {
+        Chainlink.Request memory req = buildChainlinkRequest(
+            jobId,
+            address(this),
+            this.fulfillReedeem.selector
+        );
+
+        req.add('_trackingId', _trackingId);
+        req.add('original', original);
+        req.add('redeem', redeem);
+
+        RedeemRequest memory newRedeem = RedeemRequest(voucher, product);
+        redeemRegistry[_trackingId] = newRedeem;
+
+        return sendChainlinkRequestTo(oracle, req, fee);
+    }
+    /**
+     * @notice Receives the response in the form of bool
      *
      * @param _requestId - id of the request
-     * @param _volume - response; requested 24h trading volume of ETH in USD
+     * @param _trackingId - id of redeem request
+     * @param _isMatching - response; if provided audio files match speaker
      */
-    function fulfill(
+    function fulfillReedeem(
         bytes32 _requestId,
-        uint256 _volume
+        string memory _trackingId,
+        bool _isMatching
     ) public recordChainlinkFulfillment(_requestId) {
-        volume = _volume;
-        emit DataFullfilled(volume);
+
+        if (_isMatching) {
+            RedeemRequest memory redeemRecord = redeemRegistry[_trackingId];
+
+            uint256 currentBalance = beneficiaryDonations[redeemRecord.voucher];
+            uint256 unitCost = productRegistry[redeemRecord.product];
+            require(currentBalance > unitCost, 'Insufficient balance');
+            address payable vendor = payoutRegistry[redeemRecord.product];
+
+            // Send funds to vendor
+            vendor.transfer(unitCost);
+
+            emit RedeemFullfilled(vendor, _trackingId, unitCost);
+        }
     }
 
     /**
      * @notice Withdraws LINK from the contract
      * @dev Implement a withdraw function to avoid locking your LINK in the contract
      */
-    function withdrawLink() external {}
+    function withdrawLink() public onlyOwner {
+        LinkTokenInterface link = LinkTokenInterface(chainlinkTokenAddress());
+        require(
+            link.transfer(msg.sender, link.balanceOf(address(this))),
+            'Unable to transfer Link'
+        );
+    }
+
+    function withdrawBalance() public onlyOwner {
+        payable(msg.sender).transfer(address(this).balance);
+    }
 }
