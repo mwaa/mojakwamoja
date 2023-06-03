@@ -95,8 +95,8 @@ export default function CharityForm({ onClose }) {
                 src={form.logo}
                 className="rounded-lg"
                 alt="logo"
-                width={100}
-                height={100}
+                width={256}
+                height={256}
                 onClick={() => {
                   if (uploadEl && uploadEl.current) {
                     uploadEl.current.click();

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { v4 as uuid } from 'uuid';
 import fs from 'fs';
 import { dbGetByUUID, dbSaveTo } from '@/database/db';
 
@@ -13,7 +12,7 @@ export async function POST(request, { params }) {
   const charity = dbGetByUUID(params.charityID);
   const formData = await request.formData();
   const file = formData.get('image');
-  const newId = uuid();
+  const newId = formData.get('_id');
 
   fs.mkdirSync(`./public/${params.charityID}/${newId}/`, { recursive: true });
   fs.writeFileSync(
@@ -21,20 +20,19 @@ export async function POST(request, { params }) {
     Buffer.from(await file.arrayBuffer())
   );
 
-  if (formData.get('entity') === 'PRODUCTS') {
-    const products = charity['PRODUCTS'] || {};
-    products[newId] = {
-      _id: newId,
-      image: `/${params.charityID}/${newId}/${file.name}`,
-      name: formData.get('name'),
-      product: formData.get('product'),
-      payout: formData.get('payout'),
-      isBundle: formData.get('isBundle'),
-      cost: formData.get('cost')
-    };
-    charity['PRODUCTS'] = products;
-    dbSaveTo(params.charityID, charity);
-  }
+  const products = charity['PRODUCTS'] || {};
+  const newProduct = {
+    _id: newId,
+    image: `/${params.charityID}/${newId}/${file.name}`,
+    name: formData.get('name'),
+    product: formData.get('product'),
+    payout: formData.get('payout'),
+    isBundle: formData.get('isBundle'),
+    cost: formData.get('cost')
+  };
+  products[newId] = newProduct;
+  charity['PRODUCTS'] = products;
+  dbSaveTo(params.charityID, charity);
 
-  return NextResponse.json({ record: charity });
+  return NextResponse.json({ data: newProduct });
 }

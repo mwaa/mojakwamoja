@@ -33,6 +33,12 @@ const config: HardhatUserConfig = {
     ]
   },
   networks: {
+    hardhat: {
+      forking: {
+        url: process.env.POLYGON_MUMBAI_RPC_URL || '',
+        blockNumber: 36363160
+      }
+    },
     localhost: {
       chainId: 31337
     },

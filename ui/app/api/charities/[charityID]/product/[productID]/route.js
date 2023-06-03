@@ -20,6 +20,7 @@ export async function POST(request, { params }) {
   const charity = dbGetByUUID(charityID);
   const formData = await request.formData();
   const newId = uuid();
+  let newBeneficiary = {};
 
   if (
     charity &&
@@ -33,14 +34,15 @@ export async function POST(request, { params }) {
     uploadToS3(voucher, Buffer.from(await audioFile.arrayBuffer()));
 
     const beneficiaries = charity.PRODUCTS[productID]['BENEFICIARIES'] || {};
-    beneficiaries[newId] = {
+    newBeneficiary = {
       _id: newId,
       voucher: formData.get('voucher'),
       voicePrint: formData.get('voicePrint')
     };
+    beneficiaries[newId] = newBeneficiary;
     charity.PRODUCTS[productID]['BENEFICIARIES'] = beneficiaries;
     dbSaveTo(charityID, charity);
   }
 
-  return NextResponse.json({ record: charity });
+  return NextResponse.json({ data: newBeneficiary });
 }

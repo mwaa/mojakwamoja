@@ -6,14 +6,15 @@ export default function Audio({ saveAudio }) {
   const [timer, setTimer] = useState(25);
 
   useEffect(() => {
+    let intervalId = 0;
     if (recording) {
-      setInterval(() => {
+      intervalId = setInterval(() => {
         const value = timer - 1;
         setTimer(value);
       }, 1000); // every second
-    } else if (!recording && timer != 25) {
-      setTimer(25);
     }
+    
+    return () => clearInterval(intervalId);
   }, [recording, timer]);
 
   const handleSuccessRecord = (stream) => {
@@ -22,6 +23,10 @@ export default function Audio({ saveAudio }) {
 
     if (!mediaRecorder) {
       mediaRecorder = new MediaRecorder(stream, options);
+      mediaRecorder.onstart = () => {
+        setRecording(true);
+      };
+
       mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) recordedChunks.push(e.data);
       };
@@ -36,7 +41,6 @@ export default function Audio({ saveAudio }) {
       };
     }
 
-    setRecording(true);
     if (mediaRecorder.state === 'paused') {
       mediaRecorder.resume();
     } else {

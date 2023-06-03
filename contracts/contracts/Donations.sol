@@ -23,12 +23,6 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
     mapping(string => uint256) public productRegistry;
     mapping(string => address payable) public payoutRegistry;
 
-    struct Beneficiary {
-        string voucher;
-        string voicePrint;
-    }
-    mapping(string => Beneficiary) private beneficiaryRegistry;
-
     struct RedeemRequest {
         string voucher;
         string product;
@@ -60,17 +54,12 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
     }
 
     function addBeneficiary(
-        string memory voucher,
-        string memory voicePrint,
-        string memory product
+        string memory product,
+        string memory voucher
     ) public {
         require(productRegistry[product] != 0, 'Product does not exist');
 
-        Beneficiary memory newBeneficiary = Beneficiary(voucher, voicePrint);
-
         productBeneficiary[product].push(voucher);
-        beneficiaryRegistry[voucher] = newBeneficiary;
-
         emit NewBeneficiary(voucher, product);
     }
 

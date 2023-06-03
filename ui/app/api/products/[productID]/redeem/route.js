@@ -8,21 +8,21 @@ export async function POST(request, { params }) {
   const { productID } = params;
   const beneficiaries = dbGetProductBenefiaries(productID);
   const formData = await request.formData();
-  const beneficiaryID = formData.get('identifier');
+  const beneficiaryID = formData.get('voucher');
   const audioFile = formData.get('audio');
   const newAudioId = uuid();
 
-  let record = {};
+  let data = {};
   if (beneficiaryID && beneficiaryID in beneficiaries) {
     const currentBeneficiary = beneficiaries[beneficiaryID];
 
     uploadToS3(newAudioId, Buffer.from(await audioFile.arrayBuffer()));
 
-    record = {
+    data = {
       original: currentBeneficiary.voucher,
       redeem: newAudioId
     };
   }
 
-  return NextResponse.json({ record });
+  return NextResponse.json({ data });
 }

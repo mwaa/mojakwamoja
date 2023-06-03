@@ -3,7 +3,7 @@ import DonateCard from '@/components/display/DonateCard';
 import Search from '@/components/forms/Search';
 
 async function getProducts() {
-  const response = await fetch(`http://localhost:3000/api/products`, { cache: 'no-store' });
+  const response = await fetch(`${process.env.BASE_API_URL}/api/products`, { cache: 'no-store' });
   // Recommendation: handle errors
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary

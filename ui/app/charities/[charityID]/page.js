@@ -1,10 +1,9 @@
 import PageLayout from '@/components/PageLayout';
 import Products from '@/components/lists/Products';
+import { revalidatePath } from 'next/cache';
 
 async function getCharitiesByID(charityID) {
-  const response = await fetch(`http://localhost:3000/api/charities/${charityID}`, {
-    cache: 'no-store'
-  });
+  const response = await fetch(`${process.env.BASE_API_URL}/api/charities/${charityID}`);
   // Recommendation: handle errors
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -17,11 +16,14 @@ async function getCharitiesByID(charityID) {
 const Charity = async ({ params }) => {
   const charity = (await getCharitiesByID(params.charityID)) || { PRODUCTS: [] };
 
-  console.log('We got ', params.charityID, charity);
-
+  const refreshData = async () => {
+    'use server';
+    revalidatePath('/charities/[charityID]');
+  }
+ 
   return (
     <PageLayout showNav={true}>
-      <Products charity={charity} />
+      <Products charity={charity} refreshData={refreshData} />
     </PageLayout>
   );
 };

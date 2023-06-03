@@ -2,101 +2,25 @@
   "62c60b15-11ca-4fdc-a296-77ca77c712a6": {
     "_id": "62c60b15-11ca-4fdc-a296-77ca77c712a6",
     "logo": "/logos/donate.png",
-    "name": "Peace",
-    "description": "Make it work for you"
+    "name": "Heal Together",
+    "description": "A healthcare-focused charity committed to improving access to vital medical services. We provide medical assistance, support healthcare infrastructure, promote health education, and empower communities to lead healthier lives. Join us in building a healthier future for all, one life at a time.",
+  },
+  "62c60b13-12ca-4fdc-a296-77ca77c712a5": {
+    "_id": "62c60b13-12ca-4fdc-a296-77ca77c712a5",
+    "logo": "/logos/donate.png",
+    "name": "Rise Up",
+    "description": "A poverty alleviation charity dedicated to creating sustainable change. We provide financial assistance, vocational training, and entrepreneurship support to empower individuals to overcome poverty. Through collaborative initiatives, we strive to break the cycle of poverty and foster long-term economic resilience in communities.",
   },
   "a067f0a0-e324-4d2c-9929-340dc795d3b8": {
     "_id": "a067f0a0-e324-4d2c-9929-340dc795d3b8",
     "logo": "/logos/a067f0a0-e324-4d2c-9929-340dc795d3b8/donate.png",
-    "name": "First kind",
-    "description": "Peace masters",
-    "PRODUCTS": {
-      "5cbe311c-dc84-469e-b89d-f80b06b279ab": {
-        "_id": "5cbe311c-dc84-469e-b89d-f80b06b279ab",
-        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/5cbe311c-dc84-469e-b89d-f80b06b279ab/bad robot 2.jpeg",
-        "name": "Organization 1",
-        "product": "Robots",
-        "payout": "0x793894434",
-        "isBundle": "false",
-        "cost": "350",
-        "BENEFICIARIES": {
-          "e1592087-78d0-41cc-9bc2-fc74fd59a5d1": {
-            "_id": "e1592087-78d0-41cc-9bc2-fc74fd59a5d1",
-            "voucher": "mix",
-            "voicePrint": "master"
-          },
-          "34509b0b-3c01-4713-a16c-ce4cfa1ac845": {
-            "_id": "34509b0b-3c01-4713-a16c-ce4cfa1ac845",
-            "voucher": "made",
-            "voicePrint": "mix"
-          },
-          "de948e48-b4ab-4bb9-a539-d471ed3d7ece": {
-            "_id": "de948e48-b4ab-4bb9-a539-d471ed3d7ece",
-            "voucher": "mine",
-            "voicePrint": "matters"
-          }
-        }
-      },
-      "d7238333-9585-4756-a771-f6750a61475a": {
-        "_id": "d7238333-9585-4756-a771-f6750a61475a",
-        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/d7238333-9585-4756-a771-f6750a61475a/sack-maize-flour-28336985.jpg",
-        "name": "Organization 2",
-        "product": "Maize",
-        "payout": "0x793894434",
-        "isBundle": "false",
-        "cost": "50",
-        "BENEFICIARIES": {
-          "64532d8e-6e76-46a1-b179-c07a7cb6c7a9": {
-            "_id": "64532d8e-6e76-46a1-b179-c07a7cb6c7a9",
-            "voucher": "Mane",
-            "voicePrint": "man"
-          },
-          "9ed2110e-cfbe-4e22-b294-50d225e61072": {
-            "_id": "9ed2110e-cfbe-4e22-b294-50d225e61072",
-            "name": "5dd3358a-a872-4e70-b896-33414aa7b3cd",
-            "voicePrint": " accuse able absent absurd accident account above achieve access absent absorb about about able absent acid acoustic"
-          },
-          "9f70d74c-232a-41ae-870a-667a9b9bbbe0": {
-            "_id": "9f70d74c-232a-41ae-870a-667a9b9bbbe0",
-            "voucher": "831173a6-328d-403b-8764-188f4c22437c",
-            "voicePrint": " able about access accuse absent able ability about above acid about ability absent abstract absent able accident"
-          },
-          "b8bc9363-3c73-4e1a-b6c1-ad9b2034768a": {
-            "_id": "b8bc9363-3c73-4e1a-b6c1-ad9b2034768a",
-            "voucher": "50e9d689-51b1-4245-ae82-a9b9dc8b7c6a",
-            "voicePrint": " accuse able above access above achieve acid achieve achieve abstract access access acoustic ability abuse above above"
-          },
-          "f29da62d-d025-4562-9c43-87693135717a": {
-            "_id": "f29da62d-d025-4562-9c43-87693135717a",
-            "voucher": "2f8d5166-8ac8-4066-913b-521027636769",
-            "voicePrint": " acid absurd ability ability abstract access account about absurd acoustic about absent absent absent abstract accuse absent"
-          }
-        }
-      },
-      "32c6d230-bf9a-4f04-a44c-4332cff7d838": {
-        "_id": "32c6d230-bf9a-4f04-a44c-4332cff7d838",
-        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/32c6d230-bf9a-4f04-a44c-4332cff7d838/donate.png",
-        "name": "Organization 3",
-        "product": "Yearly School Fees",
-        "payout": "0xpoijkljadf",
-        "isBundle": "false",
-        "cost": "150"
-      },
-      "7ee878a2-54b3-4364-b927-b39e88508329": {
-        "_id": "7ee878a2-54b3-4364-b927-b39e88508329",
-        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/7ee878a2-54b3-4364-b927-b39e88508329/icons8-donation-96 (1).png",
-        "name": "Organization 4",
-        "product": "Beans",
-        "payout": "0x793894434",
-        "isBundle": "false",
-        "cost": "50"
-      }
-    }
+    "name": "Nourish Hope",
+    "description": "A hunger relief charity dedicated to combating food insecurity. We distribute nutritious meals, collaborate with local farmers, and advocate for sustainable agricultural practices to ensure access to food for all. Join us in nourishing bodies and uplifting communities in need.",
   },
   "b77cd5d1-5052-4d9e-b835-401c198a8827": {
     "_id": "b77cd5d1-5052-4d9e-b835-401c198a8827",
     "logo": "/logos/b77cd5d1-5052-4d9e-b835-401c198a8827/donate.png",
-    "name": "Fund Education",
-    "description": "We assist in funding of early school years"
+    "name": "Education 4 all",
+    "description": "We are a charity organization that provides education to the less privileged, offering comprehensive programs, holistic support, and collaborative partnerships to empower individuals and break the cycle of poverty. Join us in creating a brighter future for all.",
   }
 }

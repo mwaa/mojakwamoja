@@ -1,10 +1,10 @@
 import { Beneficiaries } from '@/components/lists/Beneficiaries';
 import PageLayout from '@/components/PageLayout';
+import { revalidatePath } from 'next/cache';
 
 async function getData(charityID, productID) {
   const response = await fetch(
-    `http://localhost:3000/api/charities/${charityID}/product/${productID}`,
-    { cache: 'no-store' }
+    `${process.env.BASE_API_URL}/api/charities/${charityID}/product/${productID}`
   );
   // Recommendation: handle errors
   if (!response.ok) {
@@ -18,11 +18,15 @@ async function getData(charityID, productID) {
 const ProductBeneficiaries = async ({ params }) => {
   const { charityID, productID } = params;
   const product = (await getData(charityID, productID)) || {};
-  console.log(product);
+
+  const refreshData = async () => {
+    'use server';
+    revalidatePath('/charities/[charityID]/product/[productID]/beneficiaries');
+  }
 
   return (
     <PageLayout showNav={true}>
-      <Beneficiaries charityID={charityID} product={product} />
+      <Beneficiaries charityID={charityID} product={product} refreshData={refreshData} />
     </PageLayout>
   );
 };

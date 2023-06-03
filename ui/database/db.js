@@ -33,6 +33,7 @@ export function dbGetAll() {
 
 export function dbGetProductBenefiaries(productID) {
   let beneficiaries = {};
+  const charities = dbGetAll();
   Object.values(charities).forEach((charity) => {
     if ('PRODUCTS' in charity && productID in charity.PRODUCTS) {
       if ('BENEFICIARIES' in charity.PRODUCTS[productID]) {
