@@ -1,6 +1,27 @@
+'use client';
 import Image from 'next/image';
+import { useAccount, useContractWrite } from 'wagmi';
+import DONATIONS_ABI from '@/abis/donations.json';
+import { parseEther, parseGwei, parseUnits } from 'viem';
 
 export default function DonateCard({ product }) {
+  const { address, isConnected } = useAccount();
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
+    abi: DONATIONS_ABI,
+    functionName: 'donateToVendor'
+  });
+
+  const triggerDonation = (amount) => {
+    if (isConnected) {
+      write({
+        args: [product._id],
+        from: address,
+        value: parseUnits(amount.toString(), 15)
+      });
+    }
+  };
+
   return (
     <div
       key={product._id}
@@ -23,7 +44,7 @@ export default function DonateCard({ product }) {
             <span className="flex justify-center items-center bg-blue-100 text-blue-800 text-xs font-medium mr-2 p-2 rounded dark:bg-blue-900 dark:text-blue-300">
               Beneficiaries
               <span className="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-green-800 bg-blue-200 rounded-full">
-                2
+                {product.BENEFICIARIES ? Object.values(product.BENEFICIARIES).length : 0}
               </span>
             </span>
           </p>
@@ -38,29 +59,35 @@ export default function DonateCard({ product }) {
             <button
               type="button"
               className="text-green-700 border border-green-700 hover:bg-green-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:focus:ring-green-800 dark:hover:bg-green-500"
+              onClick={() => triggerDonation(product.cost * 1)}
             >
               x1
             </button>
             <button
               type="button"
               className="text-green-700 border border-green-700 hover:bg-green-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:focus:ring-green-800 dark:hover:bg-green-500"
+              onClick={() => triggerDonation(product.cost * 2)}
             >
               x2
             </button>
             <button
               type="button"
               className="text-green-700 border border-green-700 hover:bg-green-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:focus:ring-green-800 dark:hover:bg-green-500"
+              onClick={() => triggerDonation(product.cost * 3)}
             >
               x3
             </button>
             <button
               type="button"
               className=" text-green-700 border border-green-700 hover:bg-green-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:focus:ring-green-800 dark:hover:bg-green-500"
+              onClick={() => triggerDonation(product.cost * 4)}
             >
               x4
             </button>
           </div>
-          <p className="text-xs italic">Click on the number of units to donate</p>
+          <p className="text-xs italic text-gray-900 dark:text-white">
+            Click on the number of units to donate
+          </p>
         </div>
       </div>
     </div>

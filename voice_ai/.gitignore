@@ -9,3 +9,6 @@ audio/*
 
 # local functionality test
 test.py
+
+# file
+debug.log

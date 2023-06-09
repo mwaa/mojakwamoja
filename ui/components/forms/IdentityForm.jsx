@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import { useContractWrite, usePrepareContractWrite } from 'wagmi';
 import { Alert } from 'flowbite-react';
@@ -7,11 +7,17 @@ import randomWords from '@/utils/randomWords';
 import DONATIONS_ABI from '@/abis/donations.json';
 
 export default function IdentityForm({ charityID, productID, closeOnSave }) {
-  const [form, setForm] = useState({
-    voucher: uuid(),
-    voicePrint: randomWords(10),
-    audio: null
-  });
+  const defaultForm = useMemo(
+    () => ({
+      voucher: uuid(),
+      voicePrint: randomWords(10),
+      audio: null
+    }),
+    []
+  );
+
+  const [form, setForm] = useState(defaultForm);
+
   const [showError, setShowError] = useState(false);
 
   const { config } = usePrepareContractWrite({
@@ -44,6 +50,7 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
         .then(() => {
           write();
           closeOnSave();
+          setForm(defaultForm);
         })
         .catch((e) => {
           console.log('Error unknown: ', e);

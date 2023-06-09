@@ -19,8 +19,8 @@ const Charity = async ({ params }) => {
   const refreshData = async () => {
     'use server';
     revalidatePath('/charities/[charityID]');
-  }
- 
+  };
+
   return (
     <PageLayout showNav={true}>
       <Products charity={charity} refreshData={refreshData} />

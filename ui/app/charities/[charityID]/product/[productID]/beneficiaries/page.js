@@ -22,7 +22,7 @@ const ProductBeneficiaries = async ({ params }) => {
   const refreshData = async () => {
     'use server';
     revalidatePath('/charities/[charityID]/product/[productID]/beneficiaries');
-  }
+  };
 
   return (
     <PageLayout showNav={true}>

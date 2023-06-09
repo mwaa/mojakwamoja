@@ -13,7 +13,7 @@ export default function Audio({ saveAudio }) {
         setTimer(value);
       }, 1000); // every second
     }
-    
+
     return () => clearInterval(intervalId);
   }, [recording, timer]);
 

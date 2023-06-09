@@ -104,12 +104,16 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         uint256 recipients = productDonations[product] / unitCost;
 
         for (uint256 i = 0; i < recipients; i++) {
-            // Can use space and time to query remaining users who haven't been
-            // awarded products
-            string memory beneficiary = productBeneficiary[product][i]; //TODO:: award random beneficiaries
+            // TODO:: award random beneficiaries
+            // Explore using space and time to query remaining beneficiaries
+            // who haven't been awarded a product
+            if (productBeneficiary[product].length > i) {
+                string memory beneficiary = productBeneficiary[product][i]; 
 
-            beneficiaryDonations[beneficiary] += unitCost;
-            productDonations[product] -= unitCost;
+                beneficiaryDonations[beneficiary] += unitCost;
+                productDonations[product] -= unitCost;
+                totalDonations -= unitCost;
+            }
 
             // TODO:: transfer to escrow wallet which only transfers out if request is from donations contract
         }
@@ -120,7 +124,7 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
      * @return requestId - id of the request
      */
     function requestRedeem(
-        string memory _trackingId,
+        string memory trackingId,
         string memory voucher,
         string memory product,
         string memory original,
@@ -132,30 +136,30 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
             this.fulfillReedeem.selector
         );
 
-        req.add('_trackingId', _trackingId);
+        req.add('trackingId', trackingId);
         req.add('original', original);
         req.add('redeem', redeem);
 
         RedeemRequest memory newRedeem = RedeemRequest(voucher, product);
-        redeemRegistry[_trackingId] = newRedeem;
+        redeemRegistry[trackingId] = newRedeem;
 
         return sendChainlinkRequestTo(oracle, req, fee);
     }
     /**
      * @notice Receives the response in the form of bool
      *
-     * @param _requestId - id of the request
-     * @param _trackingId - id of redeem request
-     * @param _isMatching - response; if provided audio files match speaker
+     * @param requestId - id of the request
+     * @param trackingId - id of redeem request
+     * @param isMatching - response; if provided audio files match speaker
      */
     function fulfillReedeem(
-        bytes32 _requestId,
-        string memory _trackingId,
-        bool _isMatching
-    ) public recordChainlinkFulfillment(_requestId) {
+        bytes32 requestId,
+        string memory trackingId,
+        bool isMatching
+    ) public recordChainlinkFulfillment(requestId) {
 
-        if (_isMatching) {
-            RedeemRequest memory redeemRecord = redeemRegistry[_trackingId];
+        if (isMatching) {
+            RedeemRequest memory redeemRecord = redeemRegistry[trackingId];
 
             uint256 currentBalance = beneficiaryDonations[redeemRecord.voucher];
             uint256 unitCost = productRegistry[redeemRecord.product];
@@ -165,7 +169,7 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
             // Send funds to vendor
             vendor.transfer(unitCost);
 
-            emit RedeemFullfilled(vendor, _trackingId, unitCost);
+            emit RedeemFullfilled(vendor, trackingId, unitCost);
         }
     }
 

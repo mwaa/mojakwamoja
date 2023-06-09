@@ -1,14 +1,31 @@
 'use client';
 import { useState } from 'react';
 import { Modal } from 'flowbite-react';
+import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+import DONATIONS_ABI from '@/abis/donations.json';
 import IdentityForm from './IdentityForm';
 
 export default function AddBeneficiaryButton({ charityID, productID, refreshData }) {
   const [showForm, setShowForm] = useState(false);
 
+  const { isConnected } = useAccount();
+  const { config } = usePrepareContractWrite({
+    address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
+    abi: DONATIONS_ABI,
+    functionName: 'distributeVendorDonations',
+    args: [productID]
+  });
+  const { isLoading, write } = useContractWrite(config);
+
+  const distributeDonations = () => {
+    if (isConnected) {
+      write();
+    }
+  };
+
   return (
     <>
-      <div className="flex-none">
+      <div className="flex flex-col">
         <button
           type="button"
           onClick={() => setShowForm(true)}
@@ -30,6 +47,14 @@ export default function AddBeneficiaryButton({ charityID, productID, refreshData
           </svg>
           Add new beneficiary to product
         </button>
+
+        <button
+          type="button"
+          className="my-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-7 py-4 text-center items-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          onClick={() => distributeDonations()}
+        >
+          Distribute Funds
+        </button>
       </div>
 
       <Modal popup={true} show={showForm} onClose={() => setShowForm(false)}>
@@ -39,8 +64,8 @@ export default function AddBeneficiaryButton({ charityID, productID, refreshData
             charityID={charityID}
             productID={productID}
             closeOnSave={() => {
-                refreshData();
-                setShowForm(false);
+              refreshData();
+              setShowForm(false);
             }}
           />
         </Modal.Body>

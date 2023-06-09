@@ -3,7 +3,7 @@ import '@nomicfoundation/hardhat-toolbox';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const POLYGON_MUMBAI_RPC_URL = process.env.POLYGON_MUMBAI_RPC_URL;
+const POLYGON_MUMBAI_RPC_URL = process.env.POLYGON_MUMBAI_RPC_URL || '';
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const COMPILER_SETTINGS = {
   optimizer: {
@@ -35,9 +35,11 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: process.env.POLYGON_MUMBAI_RPC_URL || '',
-        blockNumber: 36363160
-      }
+        url: POLYGON_MUMBAI_RPC_URL,
+        blockNumber: 36405847,
+        enabled: true
+      },
+      chainId: 31337
     },
     localhost: {
       chainId: 31337
@@ -48,7 +50,7 @@ const config: HardhatUserConfig = {
       chainId: 80001
     }
   },
-  defaultNetwork: 'localhost'
+  defaultNetwork: 'hardhat'
 };
 
 export default config;

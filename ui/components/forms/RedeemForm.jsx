@@ -24,14 +24,26 @@ export default function RedeemForm({ products }) {
     audio: null
   });
 
-  const { config } = usePrepareContractWrite({
+  const { isSuccess, config } = usePrepareContractWrite({
     address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
     abi: DONATIONS_ABI,
     functionName: 'requestRedeem',
-    args: [files.trackingID, files.voucher, files.product, files.original, files.redeem],
+    args: [
+      files.trackingID,
+      files.voucher,
+      files.product,
+      `${files.original}.webm`,
+      `${files.redeem}.webm`
+    ],
     enabled: files.trackingID != ''
   });
   const { write } = useContractWrite(config);
+
+  useEffect(() => {
+    if (files.trackingID && isSuccess) {
+      write();
+    }
+  }, [files.trackingID, isSuccess, write]);
 
   useEffect(() => {
     if (address != '') {
@@ -67,8 +79,6 @@ export default function RedeemForm({ products }) {
           response.data['trackingID'] = uuid();
           console.log('\nwe got files', response.data, '\n');
           setFiles(response.data);
-          write();
-          closeOnSave();
         })
         .catch((e) => {
           console.log('Error unknown: ', e);

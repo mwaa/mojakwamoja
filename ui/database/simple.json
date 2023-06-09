@@ -4,23 +4,46 @@
     "logo": "/logos/donate.png",
     "name": "Heal Together",
     "description": "A healthcare-focused charity committed to improving access to vital medical services. We provide medical assistance, support healthcare infrastructure, promote health education, and empower communities to lead healthier lives. Join us in building a healthier future for all, one life at a time.",
+    "PRODUCTS": {
+      "c817b679-90b4-4704-8ce6-a5a3e9aead83": {
+        "_id": "c817b679-90b4-4704-8ce6-a5a3e9aead83",
+        "image": "/62c60b15-11ca-4fdc-a296-77ca77c712a6/c817b679-90b4-4704-8ce6-a5a3e9aead83/food photo.jpeg",
+        "name": "First Assist",
+        "product": "Daily Vitamins",
+        "payout": "0x3E622984b007159177Ac0216025e3ca13B37D18d",
+        "isBundle": "false",
+        "cost": "12",
+        "BENEFICIARIES": {
+          "57613be3-2b56-41d5-a54e-dd82d3fbb328": {
+            "_id": "57613be3-2b56-41d5-a54e-dd82d3fbb328",
+            "voucher": "186d90be-2150-4be8-8b6d-3825f96cc1fc",
+            "voicePrint": "boil mutual aware aware clay clay brush brush gloom poet forest "
+          },
+          "9c559a3e-6bc2-4de0-87be-bd077f361763": {
+            "_id": "9c559a3e-6bc2-4de0-87be-bd077f361763",
+            "voucher": "433185de-c16c-4a4a-8aa0-f2d47125410d",
+            "voicePrint": "length tooth multiply giraffe anxiety multiply canal tooth pledge anxiety canal "
+          }
+        }
+      }
+    }
   },
   "62c60b13-12ca-4fdc-a296-77ca77c712a5": {
     "_id": "62c60b13-12ca-4fdc-a296-77ca77c712a5",
     "logo": "/logos/donate.png",
     "name": "Rise Up",
-    "description": "A poverty alleviation charity dedicated to creating sustainable change. We provide financial assistance, vocational training, and entrepreneurship support to empower individuals to overcome poverty. Through collaborative initiatives, we strive to break the cycle of poverty and foster long-term economic resilience in communities.",
+    "description": "A poverty alleviation charity dedicated to creating sustainable change. We provide financial assistance, vocational training, and entrepreneurship support to empower individuals to overcome poverty. Through collaborative initiatives, we strive to break the cycle of poverty and foster long-term economic resilience in communities."
   },
   "a067f0a0-e324-4d2c-9929-340dc795d3b8": {
     "_id": "a067f0a0-e324-4d2c-9929-340dc795d3b8",
     "logo": "/logos/a067f0a0-e324-4d2c-9929-340dc795d3b8/donate.png",
     "name": "Nourish Hope",
-    "description": "A hunger relief charity dedicated to combating food insecurity. We distribute nutritious meals, collaborate with local farmers, and advocate for sustainable agricultural practices to ensure access to food for all. Join us in nourishing bodies and uplifting communities in need.",
+    "description": "A hunger relief charity dedicated to combating food insecurity. We distribute nutritious meals, collaborate with local farmers, and advocate for sustainable agricultural practices to ensure access to food for all. Join us in nourishing bodies and uplifting communities in need."
   },
   "b77cd5d1-5052-4d9e-b835-401c198a8827": {
     "_id": "b77cd5d1-5052-4d9e-b835-401c198a8827",
     "logo": "/logos/b77cd5d1-5052-4d9e-b835-401c198a8827/donate.png",
     "name": "Education 4 all",
-    "description": "We are a charity organization that provides education to the less privileged, offering comprehensive programs, holistic support, and collaborative partnerships to empower individuals and break the cycle of poverty. Join us in creating a brighter future for all.",
+    "description": "We are a charity organization that provides education to the less privileged, offering comprehensive programs, holistic support, and collaborative partnerships to empower individuals and break the cycle of poverty. Join us in creating a brighter future for all."
   }
 }
