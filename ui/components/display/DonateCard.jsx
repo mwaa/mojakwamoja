@@ -2,11 +2,11 @@
 import Image from 'next/image';
 import { useAccount, useContractWrite } from 'wagmi';
 import DONATIONS_ABI from '@/abis/donations.json';
-import { parseEther, parseGwei, parseUnits } from 'viem';
+import { parseUnits } from 'viem';
 
 export default function DonateCard({ product }) {
   const { address, isConnected } = useAccount();
-  const { data, isLoading, isSuccess, write } = useContractWrite({
+  const { write } = useContractWrite({
     address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
     abi: DONATIONS_ABI,
     functionName: 'donateToVendor'
@@ -48,7 +48,7 @@ export default function DonateCard({ product }) {
               </span>
             </span>
           </p>
-          <p className="text-xs italic">provided by {product.name}</p>
+          <p className="text-xs italic text-gray-900 dark:text-white">provided by {product.name}</p>
         </div>
         <div className="text-gray-900 dark:text-white">
           <p className="text-3xl font-bold ">${product.cost}</p>

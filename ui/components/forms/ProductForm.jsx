@@ -7,6 +7,7 @@ import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
 import useDebounce from '@/utils/useDebounce';
 import { Alert } from 'flowbite-react';
 import { useWeb3Modal } from '@web3modal/react';
+import { parseUnits } from 'viem';
 
 export default function ProductForm({ isVisible, charityID, closeOnSave }) {
   const { open } = useWeb3Modal();
@@ -91,7 +92,7 @@ export default function ProductForm({ isVisible, charityID, closeOnSave }) {
       body.append('product', form.product);
       body.append('payout', form.payout);
       body.append('isBundle', form.isBundle);
-      body.append('cost', form.cost);
+      body.append('cost', parseUnits(form.cost.toString(), 15));
       body.append('charityID', charityID);
       body.append('entity', 'PRODUCTS');
     }

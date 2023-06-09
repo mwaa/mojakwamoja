@@ -103,7 +103,8 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         // find how many recipients based on available donated funds
         uint256 recipients = productDonations[product] / unitCost;
 
-        for (uint256 i = 0; i < recipients; i++) {
+        // TODO:: fix out of gas issue
+        for (uint256 i = 0; i < recipients; i++) { 
             // TODO:: award random beneficiaries
             // Explore using space and time to query remaining beneficiaries
             // who haven't been awarded a product
@@ -117,6 +118,14 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
 
             // TODO:: transfer to escrow wallet which only transfers out if request is from donations contract
         }
+    }
+
+    function getBeneficiaryBalance(string memory voucher) public view returns (uint256) {
+        return beneficiaryDonations[voucher];
+    }
+
+    function getVendorBalance(string memory product) public view returns (uint256) {
+        return productDonations[product];
     }
 
     /**
@@ -145,6 +154,7 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
 
         return sendChainlinkRequestTo(oracle, req, fee);
     }
+
     /**
      * @notice Receives the response in the form of bool
      *
@@ -168,7 +178,7 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
 
             // Send funds to vendor
             vendor.transfer(unitCost);
-
+            beneficiaryDonations[redeemRecord.voucher] -= unitCost;
             emit RedeemFullfilled(vendor, trackingId, unitCost);
         }
     }

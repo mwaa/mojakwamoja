@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { ethers } from 'hardhat';
 import { BigNumber } from 'ethers';
 
-import ORACLE_ABI from '@chainlink/contracts/abi/v0.8/OracleInterface.json';
+// import ORACLE_ABI from '@chainlink/contracts/abi/v0.8/OracleInterface.json';
 
 const networkConfig = {
   name: 'localhost',
@@ -91,12 +91,10 @@ describe('Donations', function () {
       const [_, vendor, beneficiary1, beneficiary2] = await ethers.getSigners();
 
       const productID = 'MaizeID';
-      const oneBig = BigNumber.from('1');
-      const twoBig = BigNumber.from('2');
 
       const addProductTx = await donations.addCharityProduct(
         productID,
-        oneBig.toNumber(),
+        ethers.utils.parseUnits('12', 15),
         vendor.address
       );
       await addProductTx.wait();
@@ -107,19 +105,19 @@ describe('Donations', function () {
       const addBeneficiary2Tx = await donations.addBeneficiary(productID, beneficiary2.address);
       await addBeneficiary2Tx.wait();
 
-      const donate1Tx = await donations.donate(beneficiary1.address, { value: 2 });
+      const donate1Tx = await donations.donate(beneficiary1.address, { value: ethers.utils.parseUnits('24', 15) });
       await donate1Tx.wait();
 
-      const donate2Tx = await donations.donate(beneficiary2.address, { value: 2 });
+      const donate2Tx = await donations.donate(beneficiary2.address, { value: ethers.utils.parseUnits('24', 15) });
       await donate2Tx.wait();
 
       const charityDonationTx = await donations.donateToVendor(productID, {
-        value: 4
+        value: ethers.utils.parseUnits('48', 15)
       });
       await charityDonationTx.wait();
 
       let balance = await ethers.provider.getBalance(donations.address);
-      expect(balance.toString()).to.equal('8');
+      expect(balance.toString()).to.equal(ethers.utils.parseUnits('96', 15).toString());
 
       const distributeTx = await donations.distributeVendorDonations(productID);
       await distributeTx.wait();
@@ -141,7 +139,10 @@ describe('Donations', function () {
       await mockOracle.fulfillOracleRequest(requestId, 'trackingID', true);
 
       const totalDonations = await donations.totalDonations();
-      expect(totalDonations).to.equal(8);
+      expect(totalDonations).to.equal(ethers.utils.parseUnits('72', 15).toString());
+
+      const beneficiaryBalance = await donations.getBeneficiaryBalance(beneficiary1.address)
+      expect(beneficiaryBalance).to.equal(ethers.utils.parseUnits('36', 15));
 
       const vendorBalanceAfter = await ethers.provider.getBalance(vendor.address);
       expect(vendorBalanceAfter > vendorBalanceBefore).to.equal(true);
@@ -150,7 +151,12 @@ describe('Donations', function () {
       console.log('after this');
       const afterTranserDonations = await donations.totalDonations();
       console.log(afterTranserDonations);
-      expect(afterTranserDonations).to.equal(6);
+      expect(afterTranserDonations).to.equal(ethers.utils.parseUnits('72', 15).toString());
+
+      const vendorBalance = await donations.getVendorBalance(productID)
+      expect(vendorBalance).to.equal(ethers.utils.parseUnits('24', 15));
+
+
     });
   });
 });

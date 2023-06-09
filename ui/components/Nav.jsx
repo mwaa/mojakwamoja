@@ -2,8 +2,12 @@
 import { Web3Button } from '@web3modal/react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAccount } from 'wagmi';
+import { Alert } from 'flowbite-react';
 
 export default function Nav() {
+  const { isConnected } = useAccount();
+
   return (
     <nav className="border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-800 sm:px-4">
       <div className="container mx-auto flex flex-wrap items-center justify-between">
@@ -43,6 +47,19 @@ export default function Nav() {
 
           <Web3Button />
         </div>
+      </div>
+
+      <div className="container mx-auto">
+        {!isConnected && (
+          <Alert color="failure" className="my-2">
+            <span>
+              <p>
+                <span className="font-medium mr-2">Info alert! </span>
+                Please connect wallet to interact with app 
+              </p>
+            </span>
+          </Alert>
+        )}
       </div>
     </nav>
   );

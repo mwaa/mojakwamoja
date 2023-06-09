@@ -5,12 +5,12 @@ export default function Search() {
     <div className="p-2">
       <div className="flex justify-between">
         <Image src={'/worldmap.svg'} alt="World map" height={200} width={500} />
-        <div className="text-md text-white text-right">
-          <p className="text-3xl font-bold">
+        <div className=" text-gray-900 dark:text-white text-right">
+          <p className="text-4xl font-bold">
             Join other donors in giving directly to those in need.{' '}
           </p>
-          <p>
-            We have over 450 products to choose from when giving. All products are provided by
+          <p className="italic text-sm">
+            All products are provided by
             organizations vetted by charities all over the world.
           </p>
         </div>

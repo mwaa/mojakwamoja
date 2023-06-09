@@ -8,7 +8,7 @@ export async function POST(request, { params }) {
   const { productID } = params;
   const beneficiaries = dbGetProductBenefiaries(productID);
   const formData = await request.formData();
-  const beneficiaryID = formData.get('voucher');
+  const beneficiaryID = formData.get('beneficiaryId');
   const audioFile = formData.get('audio');
   const newAudioId = uuid();
 

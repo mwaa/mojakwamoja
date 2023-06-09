@@ -2,7 +2,7 @@
 
 _Moja kwa Moja is swahili meaning directly_.
 
-The moja kwa moja protocol enables transfer of donations directly to beneficiaries. Using chainlink we are able to create voice identity wallets for the beneficiaries. Protocol uses the beneficiary's confirmed voice to release donated funds to vendors.
+The moja kwa moja protocol enables transfer of donations directly to beneficiaries. Using chainlink adapter and voice AI model, charities are able to create voice governed wallets for the beneficiaries. The protocol uses the beneficiary's confirmed voice to release donated funds to charity onboarded vendors.
 
 1. Charities are responsible for onboarding vendors who wish to distribute goods & services.
 2. Charities then onboard beneficiaries voice print to the diferent goods/services available.
@@ -37,3 +37,42 @@ stores a voucher representation while their personal information remains offchai
 - Improve smart contract to randomize distribution of funds to beneficiaries
 - Automate distribution of funds through chainlink upkeep
 - A notification for vendors that funds have been transfered allowing release of goods/services
+
+
+## SETUP
+----
+
+### Voice_ai
+
+Setup as python flask project
+
+1. Create your own python environment
+2. Setup nemo as per README https://github.com/NVIDIA/NeMo
+```
+apt-get update && apt-get install -y libsndfile1 ffmpeg
+pip install Cython
+pip install nemo_toolkit['all']
+```
+3. pip install -r requirements.txt
+4. gunicorn --config gunicorn_config.py app:app
+
+### Chainlink Node
+
+1. Use tool like ngrok to create tunnel to localhost:3000
+2. Use the ngrok url for the bridge url you create chainlink node
+3. In chainlink node add a new job with job spec provided in contracts folder
+
+### Contracts deployment
+
+1. Add you env values such as chainlink job id created above
+2. Deploy to network
+
+### UI
+
+Uses next js
+
+1. Add env values such as contract deployed address
+2. Install packages
+3. Use `npm run dev` to launch the app
+
+
