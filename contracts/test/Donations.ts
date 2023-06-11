@@ -105,10 +105,14 @@ describe('Donations', function () {
       const addBeneficiary2Tx = await donations.addBeneficiary(productID, beneficiary2.address);
       await addBeneficiary2Tx.wait();
 
-      const donate1Tx = await donations.donate(beneficiary1.address, { value: ethers.utils.parseUnits('24', 15) });
+      const donate1Tx = await donations.donate(beneficiary1.address, {
+        value: ethers.utils.parseUnits('24', 15)
+      });
       await donate1Tx.wait();
 
-      const donate2Tx = await donations.donate(beneficiary2.address, { value: ethers.utils.parseUnits('24', 15) });
+      const donate2Tx = await donations.donate(beneficiary2.address, {
+        value: ethers.utils.parseUnits('24', 15)
+      });
       await donate2Tx.wait();
 
       const charityDonationTx = await donations.donateToVendor(productID, {
@@ -141,7 +145,7 @@ describe('Donations', function () {
       const totalDonations = await donations.totalDonations();
       expect(totalDonations).to.equal(ethers.utils.parseUnits('72', 15).toString());
 
-      const beneficiaryBalance = await donations.getBeneficiaryBalance(beneficiary1.address)
+      const beneficiaryBalance = await donations.getBeneficiaryBalance(beneficiary1.address);
       expect(beneficiaryBalance).to.equal(ethers.utils.parseUnits('36', 15));
 
       const vendorBalanceAfter = await ethers.provider.getBalance(vendor.address);
@@ -153,10 +157,8 @@ describe('Donations', function () {
       console.log(afterTranserDonations);
       expect(afterTranserDonations).to.equal(ethers.utils.parseUnits('72', 15).toString());
 
-      const vendorBalance = await donations.getVendorBalance(productID)
+      const vendorBalance = await donations.getVendorBalance(productID);
       expect(vendorBalance).to.equal(ethers.utils.parseUnits('24', 15));
-
-
     });
   });
 });

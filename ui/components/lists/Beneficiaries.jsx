@@ -21,7 +21,7 @@ export function Beneficiaries({ charityID, product, refreshData }) {
         from: address,
         value: parseUnits(amount.toString(), 15),
         onSuccess(data) {
-          console.log('Success in donation', data)
+          console.log('Success in donation', data);
         }
       });
     }
@@ -60,7 +60,9 @@ export function Beneficiaries({ charityID, product, refreshData }) {
       <div className="container">
         <h1 className="text-gray-900 text-2xl dark:text-white">{product.product}</h1>
         <p className="text-xs italic text-gray-900 dark:text-white">provided by {product.name}</p>
-        <p className="text-xs italic text-gray-900 dark:text-white mb-4">Unit Cost ${product.cost}</p>
+        <p className="text-xs italic text-gray-900 dark:text-white mb-4">
+          Unit Cost ${product.cost}
+        </p>
         <div className="grid grid-cols-3 gap-5">{beneficiariesElement}</div>
       </div>
     </div>

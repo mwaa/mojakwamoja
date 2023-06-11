@@ -2,11 +2,33 @@
 import { Web3Button } from '@web3modal/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useAccount } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import { Alert } from 'flowbite-react';
+import { useEffect, useState } from 'react';
+import { formatUnits } from 'viem';
 
 export default function Nav() {
+  const [showMessage, setShowMessage] = useState(false);
+  const [charityBalance, setCharityBalance] = useState('');
+
   const { isConnected } = useAccount();
+
+  const { data } = useBalance({
+    address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
+    watch: true
+  });
+
+  useEffect(() => {
+    if (data && data.value) {
+      const val = formatUnits(data.value, 15);
+      const valA = val.split('.');
+      setCharityBalance(valA[0]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setShowMessage(isConnected);
+  }, [isConnected]);
 
   return (
     <nav className="border-gray-200 bg-white px-2 py-2.5 dark:bg-gray-800 sm:px-4">
@@ -19,6 +41,13 @@ export default function Nav() {
         </a>
         <div className="flex md:order-2">
           <ul className="mt-4 mx-2 flex flex-col items-center justify-between md:mt-0 md:flex-row md:space-x-8 md:text-sm md:font-medium">
+            {charityBalance != '' && (
+              <li className="text-gray-700 dark:text-white">
+                <span className="text-xs">DONATIONS </span>
+                <span className="font-bold">{charityBalance} </span>
+                <span className="text-xs">MATIC</span>
+              </li>
+            )}
             <li>
               <Link
                 href="/charities"
@@ -49,18 +78,16 @@ export default function Nav() {
         </div>
       </div>
 
-      <div className="container mx-auto">
-        {!isConnected && (
-          <Alert color="failure" className="my-2">
-            <span>
-              <p>
-                <span className="font-medium mr-2">Info alert! </span>
-                Please connect wallet to interact with app 
-              </p>
-            </span>
+      {!showMessage && (
+        <div className="container mx-auto my-2">
+          <Alert color="failure">
+            <p>
+              <span className="font-medium mr-2">Info alert! </span>
+              Please connect wallet to interact with app
+            </p>
           </Alert>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 }

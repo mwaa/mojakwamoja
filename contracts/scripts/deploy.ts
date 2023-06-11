@@ -7,7 +7,7 @@ const networkConfig = {
   oracle: process.env.ORACLE_ADDRESS || '',
   jobId: ethers.utils.toUtf8Bytes(process.env.JOB_ID || ''),
   fee: '100000000000000000',
-  fundAmount: '1000000000000000000' // 0.1
+  fundAmount: '2000000000000000000' // 0.1
 };
 
 async function main() {

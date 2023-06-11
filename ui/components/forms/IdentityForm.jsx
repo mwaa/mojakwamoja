@@ -6,14 +6,14 @@ import Audio from './Audio';
 import randomWords from '@/utils/randomWords';
 import DONATIONS_ABI from '@/abis/donations.json';
 
-export default function IdentityForm({ charityID, productID, closeOnSave }) {
+export default function IdentityForm({ charityID, closeOnSave, isVisible, productID }) {
   const defaultForm = useMemo(
     () => ({
       voucher: uuid(),
       voicePrint: randomWords(10),
       audio: null
     }),
-    []
+    [isVisible]
   );
 
   const [form, setForm] = useState(defaultForm);
@@ -50,7 +50,6 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
         .then(() => {
           write();
           closeOnSave();
-          setForm(defaultForm);
         })
         .catch((e) => {
           console.log('Error unknown: ', e);
@@ -62,6 +61,10 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
     setForm({ ...form, audio: audioBlob });
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.currentTarget;
+    setForm({ ...form, [name]: value });
+  };
   return (
     <form className="mx-auto rounded-lg border border-gray-200 p-5 dark:border-gray-700 w-full">
       <div className="mb-6">
@@ -86,8 +89,8 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
             name="voucher"
             className="peer my-2 block w-full appearance-none rounded-lg border-0 border-b-2 border-gray-300 bg-gray-50 px-2.5 pb-2.5 pt-5 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-blue-500"
             required
-            disabled
             value={form.voucher}
+            onChange={handleChange}
           />
           <label
             htmlFor="voucher"
@@ -95,6 +98,9 @@ export default function IdentityForm({ charityID, productID, closeOnSave }) {
           >
             Voucher Label
           </label>
+          <span className="text-xs italic text-gray-900 dark:text-white">
+            For the voucher please enter value you can remember during redeem
+          </span>
         </div>
 
         <div className="relative mb-2">

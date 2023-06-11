@@ -3,7 +3,9 @@ import Products from '@/components/lists/Products';
 import { revalidatePath } from 'next/cache';
 
 async function getCharitiesByID(charityID) {
-  const response = await fetch(`${process.env.BASE_API_URL}/api/charities/${charityID}`);
+  const response = await fetch(`${process.env.BASE_API_URL}/api/charities/${charityID}`, {
+    cache: 'no-store'
+  });
   // Recommendation: handle errors
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary

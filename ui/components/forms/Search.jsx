@@ -10,8 +10,7 @@ export default function Search() {
             Join other donors in giving directly to those in need.{' '}
           </p>
           <p className="italic text-sm">
-            All products are provided by
-            organizations vetted by charities all over the world.
+            All products are provided by organizations vetted by charities all over the world.
           </p>
         </div>
       </div>

@@ -4,7 +4,8 @@ import { revalidatePath } from 'next/cache';
 
 async function getData(charityID, productID) {
   const response = await fetch(
-    `${process.env.BASE_API_URL}/api/charities/${charityID}/product/${productID}`
+    `${process.env.BASE_API_URL}/api/charities/${charityID}/product/${productID}`,
+    { cache: 'no-store' }
   );
   // Recommendation: handle errors
   if (!response.ok) {

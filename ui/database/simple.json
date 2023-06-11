@@ -1,1 +1,45 @@
-{"62c60b15-11ca-4fdc-a296-77ca77c712a6":{"_id":"62c60b15-11ca-4fdc-a296-77ca77c712a6","logo":"/logos/donate.png","name":"Heal Together","description":"A healthcare-focused charity committed to improving access to vital medical services. We provide medical assistance, support healthcare infrastructure, promote health education, and empower communities to lead healthier lives. Join us in building a healthier future for all, one life at a time."},"62c60b13-12ca-4fdc-a296-77ca77c712a5":{"_id":"62c60b13-12ca-4fdc-a296-77ca77c712a5","logo":"/logos/donate.png","name":"Rise Up","description":"A poverty alleviation charity dedicated to creating sustainable change. We provide financial assistance, vocational training, and entrepreneurship support to empower individuals to overcome poverty. Through collaborative initiatives, we strive to break the cycle of poverty and foster long-term economic resilience in communities."},"a067f0a0-e324-4d2c-9929-340dc795d3b8":{"_id":"a067f0a0-e324-4d2c-9929-340dc795d3b8","logo":"/logos/a067f0a0-e324-4d2c-9929-340dc795d3b8/donate.png","name":"Nourish Hope","description":"A hunger relief charity dedicated to combating food insecurity. We distribute nutritious meals, collaborate with local farmers, and advocate for sustainable agricultural practices to ensure access to food for all. Join us in nourishing bodies and uplifting communities in need.","PRODUCTS":{"15bbd43c-cb58-4834-b1cd-219f09368980":{"_id":"15bbd43c-cb58-4834-b1cd-219f09368980","image":"/a067f0a0-e324-4d2c-9929-340dc795d3b8/15bbd43c-cb58-4834-b1cd-219f09368980/food photo.jpeg","name":"Wholesome Foods","product":"Daily Meal Pack","payout":"0x3E622984b007159177Ac0216025e3ca13B37D18d","isBundle":"false","cost":"12","BENEFICIARIES":{"1c74f1b5-ee0c-4376-a6f5-388227bc64b6":{"_id":"1c74f1b5-ee0c-4376-a6f5-388227bc64b6","voucher":"d1649ba8-0bf5-4132-8e21-668e6b1b7032","voicePrint":"chuckle nice eye century eye verify genius pause genius pause century "}}}}},"b77cd5d1-5052-4d9e-b835-401c198a8827":{"_id":"b77cd5d1-5052-4d9e-b835-401c198a8827","logo":"/logos/b77cd5d1-5052-4d9e-b835-401c198a8827/donate.png","name":"Education 4 all","description":"We are a charity organization that provides education to the less privileged, offering comprehensive programs, holistic support, and collaborative partnerships to empower individuals and break the cycle of poverty. Join us in creating a brighter future for all."}}
+{
+  "62c60b15-11ca-4fdc-a296-77ca77c712a6": {
+    "_id": "62c60b15-11ca-4fdc-a296-77ca77c712a6",
+    "logo": "/logos/donate.png",
+    "name": "Heal Together",
+    "description": "A healthcare-focused charity committed to improving access to vital medical services. We provide medical assistance, support healthcare infrastructure, promote health education, and empower communities to lead healthier lives. Join us in building a healthier future for all, one life at a time."
+  },
+  "62c60b13-12ca-4fdc-a296-77ca77c712a5": {
+    "_id": "62c60b13-12ca-4fdc-a296-77ca77c712a5",
+    "logo": "/logos/donate.png",
+    "name": "Rise Up",
+    "description": "A poverty alleviation charity dedicated to creating sustainable change. We provide financial assistance, vocational training, and entrepreneurship support to empower individuals to overcome poverty. Through collaborative initiatives, we strive to break the cycle of poverty and foster long-term economic resilience in communities."
+  },
+  "a067f0a0-e324-4d2c-9929-340dc795d3b8": {
+    "_id": "a067f0a0-e324-4d2c-9929-340dc795d3b8",
+    "logo": "/logos/a067f0a0-e324-4d2c-9929-340dc795d3b8/donate.png",
+    "name": "Nourish Hope",
+    "description": "A hunger relief charity dedicated to combating food insecurity. We distribute nutritious meals, collaborate with local farmers, and advocate for sustainable agricultural practices to ensure access to food for all. Join us in nourishing bodies and uplifting communities in need.",
+    "PRODUCTS": {
+      "4b948b36-23d4-437b-a169-9397004b137a": {
+        "_id": "4b948b36-23d4-437b-a169-9397004b137a",
+        "image": "/a067f0a0-e324-4d2c-9929-340dc795d3b8/4b948b36-23d4-437b-a169-9397004b137a/food photo.jpeg",
+        "name": "Food Kiosk",
+        "product": "Daily Meal Pack",
+        "payout": "0x3E622984b007159177Ac0216025e3ca13B37D18d",
+        "isBundle": "false",
+        "cost": "12",
+        "BENEFICIARIES": {
+          "dc6f9acb-voucher-for-chainlink-spring": {
+            "_id": "dc6f9acb-voucher-for-chainlink-spring",
+            "voucher": "dc6f9acb-voucher-for-chainlink-spring",
+            "voicePrint": "hobby drop run call major run umbrella drop umbrella field umbrella ",
+            "displaySeed": 891116665
+          }
+        }
+      }
+    }
+  },
+  "b77cd5d1-5052-4d9e-b835-401c198a8827": {
+    "_id": "b77cd5d1-5052-4d9e-b835-401c198a8827",
+    "logo": "/logos/b77cd5d1-5052-4d9e-b835-401c198a8827/donate.png",
+    "name": "Education 4 all",
+    "description": "We are a charity organization that provides education to the less privileged, offering comprehensive programs, holistic support, and collaborative partnerships to empower individuals and break the cycle of poverty. Join us in creating a brighter future for all."
+  }
+}

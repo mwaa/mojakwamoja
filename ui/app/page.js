@@ -19,7 +19,7 @@ const Donate = async () => {
     <PageLayout showNav={true}>
       <div className="container mx-auto">
         <Search />
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-4 gap-4">
           {products &&
             products.map((product) => <DonateCard key={product._id} product={product} />)}
         </div>

@@ -34,7 +34,7 @@ export default function ProductForm({ isVisible, charityID, closeOnSave }) {
     address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
     abi: DONATIONS_ABI,
     functionName: 'addCharityProduct',
-    args: [debouncedForm._id, debouncedForm.cost, debouncedForm.payout],
+    args: [debouncedForm._id, parseUnits(debouncedForm.cost.toString(), 15), debouncedForm.payout],
     enabled: debouncedForm._id != '' && debouncedForm.payout != '' && debouncedForm.cost > 0
   });
   const { isLoading, isSuccess, write } = useContractWrite(config);

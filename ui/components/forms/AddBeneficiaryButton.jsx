@@ -1,27 +1,27 @@
 'use client';
 import { useState } from 'react';
 import { Modal } from 'flowbite-react';
-import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
-import DONATIONS_ABI from '@/abis/donations.json';
+// import { useAccount, useContractWrite, usePrepareContractWrite } from 'wagmi';
+// import DONATIONS_ABI from '@/abis/donations.json';
 import IdentityForm from './IdentityForm';
 
 export default function AddBeneficiaryButton({ charityID, productID, refreshData }) {
   const [showForm, setShowForm] = useState(false);
 
-  const { isConnected } = useAccount();
-  const { config } = usePrepareContractWrite({
-    address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
-    abi: DONATIONS_ABI,
-    functionName: 'distributeVendorDonations',
-    args: [productID]
-  });
-  const { isLoading, write } = useContractWrite(config);
+  // const { isConnected } = useAccount();
+  // const { config } = usePrepareContractWrite({
+  //   address: process.env.NEXT_PUBLIC_DONATIONS_ADDRESS,
+  //   abi: DONATIONS_ABI,
+  //   functionName: 'distributeVendorDonations',
+  //   args: [productID]
+  // });
+  // const { isLoading, write } = useContractWrite(config);
 
-  const distributeDonations = () => {
-    if (isConnected) {
-      write();
-    }
-  };
+  // const distributeDonations = () => {
+  //   if (isConnected) {
+  //     write();
+  //   }
+  // };
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function AddBeneficiaryButton({ charityID, productID, refreshData
         <button
           type="button"
           className="my-4 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-7 py-4 text-center items-center mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-          onClick={() => distributeDonations()}
+          onClick={console.log}
         >
           Distribute Funds
         </button>
@@ -61,6 +61,7 @@ export default function AddBeneficiaryButton({ charityID, productID, refreshData
         <Modal.Header />
         <Modal.Body>
           <IdentityForm
+            isVisible={showForm}
             charityID={charityID}
             productID={productID}
             closeOnSave={() => {

@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { v4 as uuid } from 'uuid';
 import { dbGetByUUID, dbSaveTo } from '@/database/db';
 import { uploadToS3 } from '@/utils/uploadS3';
 
@@ -19,7 +18,6 @@ export async function POST(request, { params }) {
   const { charityID, productID } = params;
   const charity = dbGetByUUID(charityID);
   const formData = await request.formData();
-  const newId = uuid();
   let newBeneficiary = {};
 
   if (
@@ -35,11 +33,12 @@ export async function POST(request, { params }) {
 
     const beneficiaries = charity.PRODUCTS[productID]['BENEFICIARIES'] || {};
     newBeneficiary = {
-      _id: newId,
-      voucher: formData.get('voucher'),
-      voicePrint: formData.get('voicePrint')
+      _id: voucher,
+      voucher: voucher,
+      voicePrint: formData.get('voicePrint'),
+      displaySeed: Math.round(Math.random() * 1000000000)
     };
-    beneficiaries[newId] = newBeneficiary;
+    beneficiaries[voucher] = newBeneficiary;
     charity.PRODUCTS[productID]['BENEFICIARIES'] = beneficiaries;
     dbSaveTo(charityID, charity);
   }

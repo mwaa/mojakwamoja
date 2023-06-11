@@ -2,7 +2,7 @@ import PageLayout from '@/components/PageLayout';
 import Charities from '@/components/lists/Charities';
 
 async function getCharities() {
-  const response = await fetch(`http://localhost:3000/api/charities`, { cache: 'no-store' });
+  const response = await fetch(`${process.env.BASE_API_URL}/api/charities`, { cache: 'no-store' });
   // Recommendation: handle errors
   if (!response.ok) {
     // This will activate the closest `error.js` Error Boundary

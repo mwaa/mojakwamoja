@@ -15,8 +15,6 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
     bytes32 private immutable jobId;
     uint256 private immutable fee;
 
-    uint256 public totalDonations;
-
     mapping(string => uint256) public beneficiaryDonations;
     mapping(string => uint256) public productDonations;
     mapping(string => string[]) private productBeneficiary;
@@ -30,7 +28,8 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
     mapping(string => RedeemRequest) private redeemRegistry;
 
     event NewBeneficiary(string voucher, string product);
-    event RedeemFullfilled(address _vendor, string _trackID, uint256 _amount);
+    event RedeemSuccess(address vendor, uint256 amount);
+    event RedeemFail(address vendor, string message);
 
     /**
      * @notice Executes once when a contract is created to initialize state variables
@@ -53,10 +52,7 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         fee = _fee;
     }
 
-    function addBeneficiary(
-        string memory product,
-        string memory voucher
-    ) public {
+    function addBeneficiary(string memory product, string memory voucher) public {
         require(productRegistry[product] != 0, 'Product does not exist');
 
         productBeneficiary[product].push(voucher);
@@ -80,7 +76,6 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         require(msg.value > 0, 'Donation must be greater than 0');
 
         beneficiaryDonations[voucher] += msg.value;
-        totalDonations += msg.value;
     }
 
     /**
@@ -90,7 +85,6 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         require(msg.value > 0, 'Donation must be greater than 0');
 
         productDonations[product] += msg.value;
-        totalDonations += msg.value;
     }
 
     /**
@@ -104,16 +98,15 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         uint256 recipients = productDonations[product] / unitCost;
 
         // TODO:: fix out of gas issue
-        for (uint256 i = 0; i < recipients; i++) { 
+        for (uint256 i = 0; i < recipients; i++) {
             // TODO:: award random beneficiaries
             // Explore using space and time to query remaining beneficiaries
             // who haven't been awarded a product
             if (productBeneficiary[product].length > i) {
-                string memory beneficiary = productBeneficiary[product][i]; 
+                string memory beneficiary = productBeneficiary[product][i];
 
                 beneficiaryDonations[beneficiary] += unitCost;
                 productDonations[product] -= unitCost;
-                totalDonations -= unitCost;
             }
 
             // TODO:: transfer to escrow wallet which only transfers out if request is from donations contract
@@ -167,19 +160,19 @@ contract Donations is ChainlinkClient, ConfirmedOwner {
         string memory trackingId,
         bool isMatching
     ) public recordChainlinkFulfillment(requestId) {
+        RedeemRequest memory redeemRecord = redeemRegistry[trackingId];
 
-        if (isMatching) {
-            RedeemRequest memory redeemRecord = redeemRegistry[trackingId];
+        uint256 currentBalance = beneficiaryDonations[redeemRecord.voucher];
+        uint256 unitCost = productRegistry[redeemRecord.product];
+        address payable vendor = payoutRegistry[redeemRecord.product];
 
-            uint256 currentBalance = beneficiaryDonations[redeemRecord.voucher];
-            uint256 unitCost = productRegistry[redeemRecord.product];
-            require(currentBalance > unitCost, 'Insufficient balance');
-            address payable vendor = payoutRegistry[redeemRecord.product];
-
+        if (isMatching && currentBalance >= unitCost) {
             // Send funds to vendor
             vendor.transfer(unitCost);
             beneficiaryDonations[redeemRecord.voucher] -= unitCost;
-            emit RedeemFullfilled(vendor, trackingId, unitCost);
+            emit RedeemSuccess(vendor, unitCost);
+        } else {
+            emit RedeemFail(vendor, 'Low balance or voices did not match');
         }
     }
 
