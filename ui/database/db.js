@@ -1,25 +1,42 @@
 import fs from 'fs';
 import path from 'path';
+import { kv } from "@vercel/kv";
 
-let dbPath = path.join(process.cwd(), 'database/simple.json');
+const dbPath = path.join(process.cwd(), 'database/simple.json');
 
 if (process.env.NODE_ENV === 'production') {
-  dbPath = path.join('/tmp', 'simple.json');
-  if (!fs.existsSync(path)) {
-    const filePath = path.join(process.cwd(), 'database/simple.json');
-    const data = JSON.parse(fs.readFileSync(filePath));
-    fs.writeFileSync(dbPath, JSON.stringify(data), { flag: 'wx' });
+  const data = JSON.parse(fs.readFileSync(dbPath));
+  const existingData = readDB();
+  if (!"62c60b15-11ca-4fdc-a296-77ca77c712a6" in existingData) {
+    writeToDB(data);
   }
 }
 
+function readDB() {
+  if (process.env.NODE_ENV === 'production') {
+    return JSON.parse(kv.get('charities'));
+  } else {
+    return JSON.parse(fs.readFileSync(dbPath));
+  }
+}
+
+function writeToDB(data) {
+  if (process.env.NODE_ENV === 'production') {
+    return kv.set('charities', JSON.stringify(data));
+  } else {
+    return fs.writeFileSync(dbPath, JSON.stringify(data), 'utf-8');
+  }
+}
+
+
 export function dbSaveTo(uuid, record) {
-  const data = JSON.parse(fs.readFileSync(dbPath));
+  const data = readDB();
   data[uuid] = record;
-  fs.writeFileSync(dbPath, JSON.stringify(data), 'utf-8');
+  writeToDB(data);
 }
 
 export function dbGetByUUID(uuid) {
-  const data = JSON.parse(fs.readFileSync(dbPath));
+  const data = readDB();
   if (uuid in data) {
     return data[uuid];
   }
@@ -27,17 +44,17 @@ export function dbGetByUUID(uuid) {
 }
 
 export function dbDeleteByUUID(uuid) {
-  const data = JSON.parse(fs.readFileSync(dbPath));
+  const data = readDB();
   if (uuid in data) {
     const isRemoved = delete data[uuid];
-    fs.writeFileSync(dbPath, JSON.stringify(data), 'utf-8');
+    writeToDB(data);
     return isRemoved;
   }
   return false;
 }
 
 export function dbGetAll() {
-  const data = JSON.parse(fs.readFileSync(dbPath));
+  const data = readDB();
   return Object.values(data);
 }
 
