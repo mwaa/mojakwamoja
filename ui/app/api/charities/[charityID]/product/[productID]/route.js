@@ -29,7 +29,7 @@ export async function POST(request, { params }) {
     const voucher = formData.get('voucher');
     const audioFile = formData.get('audio');
 
-    uploadToS3(voucher, Buffer.from(await audioFile.arrayBuffer()));
+    await uploadToS3(voucher, Buffer.from(await audioFile.arrayBuffer()));
 
     const beneficiaries = charity.PRODUCTS[productID]['BENEFICIARIES'] || {};
     newBeneficiary = {

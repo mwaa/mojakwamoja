@@ -16,7 +16,7 @@ export async function POST(request, { params }) {
   if (voucher && voucher in beneficiaries) {
     const currentBeneficiary = beneficiaries[voucher];
 
-    uploadToS3(newAudioId, Buffer.from(await audioFile.arrayBuffer()));
+    await uploadToS3(newAudioId, Buffer.from(await audioFile.arrayBuffer()));
 
     data = {
       original: currentBeneficiary.voucher,
