@@ -2,6 +2,8 @@
 
 _Moja kwa Moja is swahili meaning directly_.
 
+Visit https://mojakwamoja.vercel.app/ to try it out.
+
 The moja kwa moja protocol enables transfer of donations directly to beneficiaries. Using chainlink adapter and voice AI model, charities are able to create voice governed wallets for the beneficiaries. The protocol uses the beneficiary's confirmed voice to release donated funds to charity onboarded vendors.
 
 1. Charities are responsible for onboarding vendors who wish to distribute goods & services.
