@@ -4,7 +4,7 @@ import { uploadToS3 } from '@/utils/uploadS3';
 
 export async function GET(request, { params }) {
   const { charityID, productID } = params;
-  const charity = dbGetByUUID(charityID);
+  const charity = await dbGetByUUID(charityID);
   let product = {};
   if (charity && charity.PRODUCTS && productID in charity.PRODUCTS) {
     product = charity.PRODUCTS[productID];
@@ -16,7 +16,7 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   // Get form data from request
   const { charityID, productID } = params;
-  const charity = dbGetByUUID(charityID);
+  const charity = await dbGetByUUID(charityID);
   const formData = await request.formData();
   let newBeneficiary = {};
 
@@ -40,7 +40,7 @@ export async function POST(request, { params }) {
     };
     beneficiaries[voucher] = newBeneficiary;
     charity.PRODUCTS[productID]['BENEFICIARIES'] = beneficiaries;
-    dbSaveTo(charityID, charity);
+    await dbSaveTo(charityID, charity);
   }
 
   return NextResponse.json({ data: newBeneficiary });

@@ -2,7 +2,7 @@ import { dbGetAll } from '@/database/db';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const charities = dbGetAll();
+  const charities = await dbGetAll();
 
   let products = [];
   Object.values(charities).forEach((charity) => {

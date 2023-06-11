@@ -21,6 +21,6 @@ export async function POST(request) {
     description: formData.get('description')
   };
 
-  dbSaveTo(newId, charity);
+  await dbSaveTo(newId, charity);
   return NextResponse.json({ data: charity });
 }

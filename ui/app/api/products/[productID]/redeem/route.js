@@ -6,7 +6,7 @@ import { uploadToS3 } from '@/utils/uploadS3';
 export async function POST(request, { params }) {
   // Get form data from request
   const { productID } = params;
-  const beneficiaries = dbGetProductBenefiaries(productID);
+  const beneficiaries = await dbGetProductBenefiaries(productID);
   const formData = await request.formData();
   const voucher = formData.get('voucher');
   const audioFile = formData.get('audio');

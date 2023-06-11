@@ -3,13 +3,13 @@ import fs from 'fs';
 import { dbGetByUUID, dbSaveTo } from '@/database/db';
 
 export async function GET(request, { params }) {
-  const charity = dbGetByUUID(params.charityID);
+  const charity = await dbGetByUUID(params.charityID);
   return NextResponse.json({ record: charity });
 }
 
 export async function POST(request, { params }) {
   // Get form data from request
-  const charity = dbGetByUUID(params.charityID);
+  const charity = await dbGetByUUID(params.charityID);
   const formData = await request.formData();
   const file = formData.get('image');
   const newId = formData.get('_id');
@@ -32,7 +32,7 @@ export async function POST(request, { params }) {
   };
   products[newId] = newProduct;
   charity['PRODUCTS'] = products;
-  dbSaveTo(params.charityID, charity);
+  await dbSaveTo(params.charityID, charity);
 
   return NextResponse.json({ data: newProduct });
 }
