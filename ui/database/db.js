@@ -4,11 +4,11 @@ import path from 'path';
 let dbPath = path.join(process.cwd(), 'database/simple.json');
 
 if (process.env.NODE_ENV === 'production') {
-  dbPath = path.join('/tmp/', 'database/simple.json');
+  dbPath = path.join('/tmp', 'simple.json');
   if (!fs.existsSync(path)) {
     const filePath = path.join(process.cwd(), 'database/simple.json');
     const data = JSON.parse(fs.readFileSync(filePath));
-    fs.writeFileSync(dbPath, JSON.stringify(data), 'utf-8');
+    fs.writeFileSync(dbPath, JSON.stringify(data), { flag: 'wx' });
   }
 }
 
