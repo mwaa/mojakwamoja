@@ -15,8 +15,7 @@ if (process.env.NODE_ENV === 'production') {
 
 async function readDB() {
   if (process.env.NODE_ENV === 'production') {
-    const data = await kv.get('charities');
-    return JSON.parse(data);
+    return await kv.get('charities');
   } else {
     return JSON.parse(fs.readFileSync(dbPath));
   }
@@ -24,7 +23,7 @@ async function readDB() {
 
 async function writeToDB(data) {
   if (process.env.NODE_ENV === 'production') {
-    return await kv.set('charities', JSON.stringify(data));
+    return await kv.set('charities', data);
   } else {
     return fs.writeFileSync(dbPath, JSON.stringify(data), 'utf-8');
   }
