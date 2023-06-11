@@ -1,1 +1,7 @@
-export async function GET(request) {}
+import { NextResponse } from "next/server";
+
+export async function GET() {
+    return NextResponse.json({
+        status: 'Up & Running'
+    });
+}
