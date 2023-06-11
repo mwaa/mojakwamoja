@@ -7,7 +7,7 @@ const dbPath = path.join(process.cwd(), 'database/simple.json');
 if (process.env.NODE_ENV === 'production') {
   const data = JSON.parse(fs.readFileSync(dbPath));
   const existingData = readDB();
-  if (!"62c60b15-11ca-4fdc-a296-77ca77c712a6" in existingData) {
+  if (existingData && !"62c60b15-11ca-4fdc-a296-77ca77c712a6" in existingData) {
     writeToDB(data);
   }
 }
