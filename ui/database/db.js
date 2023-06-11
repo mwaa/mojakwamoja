@@ -14,7 +14,9 @@ if (process.env.NODE_ENV === 'production') {
 
 function readDB() {
   if (process.env.NODE_ENV === 'production') {
-    return JSON.parse(kv.get('charities'));
+    kv.get('charities').then((data) => {
+      return JSON.parse(data);
+    });
   } else {
     return JSON.parse(fs.readFileSync(dbPath));
   }
