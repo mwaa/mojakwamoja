@@ -99,6 +99,9 @@ export default function Audio({ saveAudio }) {
       <p className="my-2 text-xs italic text-gray-900 dark:text-gray-300">
         Please note you have maximum of 25 seconds once you click start
       </p>
+      <p className="my-2 text-xs italic text-gray-900 dark:text-gray-300">
+        Please click stop to save voice recording
+      </p>
     </div>
   );
 }
