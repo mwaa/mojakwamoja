@@ -1,6 +1,9 @@
 import fs from 'fs';
+import path from 'path';
 
-const dbPath = './database/simple.json';
+const dbPath = path.join(process.cwd(), 'database/simple.json');
+
+// const dbPath = './database/simple.json';
 
 export function dbSaveTo(uuid, record) {
   const data = JSON.parse(fs.readFileSync(dbPath));
